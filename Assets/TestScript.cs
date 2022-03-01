@@ -8,48 +8,64 @@ using UnityEditor;
 static class TestScript
 {
 
-    static EditorWindow previousWindow;
-    static EditorWindow currentWindow;
+    static EditorWindow previousWindow, currentWindow;
     static string nameOfCurrentWindow = "";
     static TestScript()
     {
         EditorApplication.update += Update;
+        // Aquí los mencionará todos,
+        // pero tengo que mirar que pasa
+        // si le van a dar al play cada
+        // 1000 veces, o si se recompilarán los scripts
+        
     }
-    
-
-
-
 
     static void Update()
     {
-        test();
+
+        if (currentWindow == null)
+        {
+            EditorWindow[] allWindows = Resources.FindObjectsOfTypeAll<EditorWindow>();
+            Debug.Log("Windows Size: " + allWindows.Length);
+            allWindows[0].Focus();
+            foreach (var item in allWindows)
+            {
+                if (item.GetType().Name == Windows.SceneView)
+                {
+                    item.Focus();
+                }
+            }
+            currentWindow = EditorWindow.focusedWindow;
+            Debug.Log(currentWindow.GetType().Name);
+        }
+        WindowsChecker(); 
     }
-    static void test()
+    
+    static void WindowsChecker()
     {
         currentWindow = EditorWindow.focusedWindow;
         if (currentWindow != previousWindow)
         {
             nameOfCurrentWindow = currentWindow.GetType().Name;
-
             switch (nameOfCurrentWindow)
             {
-               case NameHolder.SceneHierarchy:  
-                    Debug.Log("You have opened: " + NameHolder.SceneHierarchy);
+               case Windows.SceneHierarchy:  
+                    Debug.Log("You have opened: " + Windows.SceneHierarchy);
                     break;
-               case NameHolder.SceneView:    
-                    Debug.Log("You have opened: " + NameHolder.SceneView);
+               case Windows.SceneView:    
+                    Debug.Log("You have opened: " + Windows.SceneView);
                     break;
-               case NameHolder.GameView:     
-                    Debug.Log("You have opened: " + NameHolder.GameView);
+               case Windows.GameView:     
+                    Debug.Log("You have opened: " + Windows.GameView);
                     break;
-               case NameHolder.Console:        
-                    Debug.Log("You have opened: " + NameHolder.Console);
+               case Windows.Console:        
+                    Debug.Log("You have opened: " + Windows.Console);
                     break;
-               case NameHolder.Inspector:       
-                    Debug.Log("You have opened: " + NameHolder.Inspector);
+               case Windows.Inspector:       
+                    Debug.Log("You have opened: " + Windows.Inspector);
                     break;
-                case NameHolder.AssetStore:
-                    Debug.Log("You have opened: " + NameHolder.AssetStore);
+                case Windows.AssetStore:
+                    Debug.Log("You have opened: " + Windows.AssetStore);
                     break;
                 default:
                     Debug.Log(nameOfCurrentWindow);
@@ -58,56 +74,39 @@ static class TestScript
         }
         
         
-        // Abrir
-        if (false)
-        { 
-            // I can use this when i want to get all currently open windows
-            EditorWindow[] allWindows = Resources.FindObjectsOfTypeAll<EditorWindow>();
-            foreach (var item in allWindows)
-            {
-                Debug.Log(item);
-            }
-            var editorAsm = typeof(Editor).Assembly;
-            Type inspWndType = editorAsm.GetType("UnityEditor.InspectorWindow");
-            EditorWindow.GetWindow(inspWndType, true, "My Empty Window");
-        }
+   
         // TODO 
         /* Close all tabs except basic and set layout 
          * Autoclose tabs?
          * ** Set Autoclose optional
          * Get all params from the window and navigate
          * Has unsaved stuff
+         * 
          */
-        if (false)
-        {
-            var editorAsm = typeof(Editor).Assembly;
-            Type inspWndType = editorAsm.GetType("UnityEditor.SceneHierarchyWindow");
-            EditorWindow.GetWindow(inspWndType, true, "My Empty Window");
-        }
+       
         previousWindow = currentWindow;
     }
 
  
  
-   
+    static void ShowInspectorEditorWindow()
+    {
+        string inspectorWindowTypeName = "UnityEditor.InspectorWindow";
+        ShowEditorWindowWithTypeName(inspectorWindowTypeName);
+    }
 
+    static void ShowSceneEditorWindow()
+    {
+        string sceneWindowTypeName = "UnityEditor.SceneView";
+        ShowEditorWindowWithTypeName(sceneWindowTypeName);
+    }
 
+    static void ShowEditorWindowWithTypeName(string windowTypeName)
+    { /* ESTO PETA
+        var editorAsm = typeof(Editor).Assembly;
+        Type inspWndType = editorAsm.GetType(windowTypeName);
+        EditorWindow.GetWindow(inspWndType, false, "My Empty Window", true);
 
-    //public void ShowInspectorEditorWindow()
-    //{
-    //    string inspectorWindowTypeName = "UnityEditor.InspectorWindow";
-    //    ShowEditorWindowWithTypeName(inspectorWindowTypeName);
-    //}
-
-    //public void ShowSceneEditorWindow()
-    //{
-    //    string sceneWindowTypeName = "UnityEditor.SceneView";
-    //    ShowEditorWindowWithTypeName(sceneWindowTypeName);
-    //}
-
-    //public void ShowEditorWindowWithTypeName(string windowTypeName)
-    //{
-    //    var windowType = typeof(Editor).Assembly.GetType(windowTypeName);
-    //    EditorWindow.GetWindow(windowType);
-    //}
+        */ 
+    }
 }

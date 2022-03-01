@@ -1,6 +1,6 @@
 using System.Collections;
 
-static class NameHolder
+static class Windows
 {
     public const string SceneHierarchy = "SceneHierarchyWindow";
     public const string SceneView = "SceneView";
