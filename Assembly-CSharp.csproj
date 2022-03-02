@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="Assets\TTS_Addon\TabsManager\TabNameHolder.cs" />
     <Compile Include="Assets\TTS_Addon\TabsManager\TabDetector.cs" />
-    <Compile Include="Assets\TTS_Addon\TabsManager\Docker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -1,9 +1,9 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
 [InitializeOnLoad]
 static class SceneDetector
 {
@@ -29,18 +29,10 @@ static class SceneDetector
             started = true;
             EditorWindow[] allWindows = Resources.FindObjectsOfTypeAll<EditorWindow>();
             Debug.Log("Windows Size: " + allWindows.Length);
-            //allWindows[0].Focus();
-            //foreach (var item in allWindows)
-            //{
-            //    if (item.GetType().Name == Windows.SceneView)
-            //    {
-            //        item.Focus();
-            //    }
-            //}
+       
             ShowEditorWindowWithTypeName(Windows.SceneView);
-
-           currentWindow = EditorWindow.focusedWindow;
-           Debug.Log(currentWindow.GetType().Name); 
+            currentWindow = EditorWindow.focusedWindow;
+            Debug.Log(currentWindow.GetType().Name); 
         }else if(currentWindow == null && started)
         {
             Debug.Log("a");
@@ -53,26 +45,22 @@ static class SceneDetector
         currentWindow = EditorWindow.focusedWindow;
         if (currentWindow != previousWindow)
         {
+            Debug.Log(currentWindow);
             nameOfCurrentWindow = currentWindow.GetType().Name;
+            Debug.Log(nameOfCurrentWindow);
             switch (nameOfCurrentWindow)
             {
-               case Windows.SceneHierarchy:  
-                    Debug.Log("You have opened: " + Windows.SceneHierarchy);
+               case Windows.SceneHierarchyWindow:  
                     break;
                case Windows.SceneView:    
-                    Debug.Log("You have opened: " + Windows.SceneView);
                     break;
                case Windows.GameView:     
-                    Debug.Log("You have opened: " + Windows.GameView);
                     break;
-               case Windows.Console:        
-                    Debug.Log("You have opened: " + Windows.Console);
+               case Windows.ConsoleWindow:        
                     break;
-               case Windows.Inspector:       
-                    Debug.Log("You have opened: " + Windows.Inspector);
+               case Windows.InspectorWindow:       
                     break;
-                case Windows.AssetStore:
-                    Debug.Log("You have opened: " + Windows.AssetStore);
+                case Windows.ProjectBrowser:
                     break;
                 default:
                     Debug.Log(nameOfCurrentWindow);
@@ -109,18 +97,55 @@ static class SceneDetector
     }
 
     static void ShowEditorWindowWithTypeName(string windowTypeName)
-    { 
-        //Type inspWndType = typeof(Editor).Assembly.GetType("UnityEditor.SceneView");
+    {
 
-        //EditorWindow[] allWindows = Resources.FindObjectsOfTypeAll<EditorWindow>();
-        //Type[] insWindTypeList = new Type[allWindows.Length];
-        //for(int i = 0; i < allWindows.Length; i++)
-        //{
-        //    insWindTypeList[i] = allWindows[i].GetType();
-        //}
-        //var window = EditorWindow.GetWindow<typeof(inspWndType)>(insWindTypeList);
+        /*
+        var types = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type =>type.IsClass && !type.IsAbstract && 
+            type.IsSubclassOf(typeof(EditorWindow))).ToArray();
 
-        //var window = EditorWindow.GetWindow(inspWndType, false, "My Empty Window", true);
-       
-    } 
-}
+        var window = EditorWindow.GetWindow<UnityEditor.SceneView>(types);
+        */
+
+        
+        var types = new List<Type>()
+        { 
+            // first add your preferences
+            typeof(SceneView),
+            typeof(Editor).Assembly.GetType("UnityEditor." + windowTypeName)
+        };
+
+        // and then add all others as fallback (who cares about duplicates at this point ? ;) )
+        types.AddRange(AppDomain.CurrentDomain.GetAssemblies().
+            SelectMany(assembly => assembly.GetTypes())
+            .Where(type => type.IsClass && !type.IsAbstract 
+            && type.IsSubclassOf(typeof(EditorWindow))));
+
+        switch (windowTypeName)
+        {
+            case Windows.SceneHierarchyWindow:
+                break;
+            case Windows.SceneView:
+                var window = EditorWindow.GetWindow<UnityEditor.SceneView>(types.ToArray());
+                window.Focus();
+                break;
+            case Windows.GameView:
+                window = EditorWindow.GetWindow<UnityEditor.SceneView>(types.ToArray());
+                window.Focus();
+                break;
+            case Windows.ConsoleWindow:
+                break;
+            case Windows.InspectorWindow:
+                break;
+            case Windows.ProjectBrowser:
+                break;
+            default:
+                Debug.Log(nameOfCurrentWindow);
+                break;
+
+        }
+
+
+    }
+} 
