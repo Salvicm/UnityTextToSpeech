@@ -49,18 +49,23 @@ static class SceneDetector
         {
             case KeyCode.Alpha1:
                 Debug.Log("Scene");
+                WindowsVoice.speak("Opening Scene");
                 break;
             case KeyCode.Alpha2:
                 Debug.Log("Game");
+                WindowsVoice.speak("Opening Game");
                 break;
             case KeyCode.Alpha3:
                 Debug.Log("Inspector");
+                WindowsVoice.speak("Opening Inspector");
                 break;
             case KeyCode.Alpha4:
                 Debug.Log("Hierarchy");
+                WindowsVoice.speak("Opening Hierarchy");
                 break;
             case KeyCode.Alpha5:
                 Debug.Log("Project");
+                WindowsVoice.speak("Opening Project");
                 break;
             case KeyCode.Escape:
                 Debug.Log("Console");
