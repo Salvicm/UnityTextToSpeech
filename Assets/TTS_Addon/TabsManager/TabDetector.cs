@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,22 +17,43 @@ static class SceneDetector
 
     static SceneDetector()
     {
+
         EditorApplication.update += Update;
 
 
+        // Key presses
         System.Reflection.FieldInfo info = typeof(EditorApplication)
-            .GetField("globalEventHandler",
-            System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+            .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
         EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
-
         value += EditorGlobalKeyPress;
-
         info.SetValue(null, value);
 
-        // Aquí los mencionará todos,
-        // pero tengo que mirar que pasa
-        // si le van a dar al play cada
-        // 1000 veces, o si se recompilarán los scripts
+        var types = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type => type.IsClass && !type.IsAbstract &&
+            type.IsSubclassOf(typeof(EditorWindow))).ToArray();
+
+        string superString = "";
+        //foreach (var item in types)
+        //{
+        //    superString += "- " + item.Name + "\n";
+        //    foreach(var x in item.GetMethods())
+        //    {
+        //        superString += "--- " + x.Name + "\n";
+        //        foreach(var j in x.GetParameters())
+        //        {
+        //            superString += "----- " + j.Name + "\n";
+
+        //        }
+        //    }
+        //}
+        Debug.Log(superString);
+        if (!SessionState.GetBool("FirstInitDone", false))
+        {
+            WindowsVoice.speak("Inicializando TTS");
+            SessionState.SetBool("FirstInitDone", true);
+        }
+        // Aquí los mencionará todos // No ha sido buena idea, tengo que encontrar la manera de obligarlo a callar.
 
 
     }
@@ -48,27 +70,26 @@ static class SceneDetector
         switch (Event.current.keyCode)
         {
             case KeyCode.Alpha1:
-                Debug.Log("Scene");
-                WindowsVoice.speak("Opening Scene");
+                WindowsVoice.speak("Abriendo escena");
                 break;
             case KeyCode.Alpha2:
-                Debug.Log("Game");
-                WindowsVoice.speak("Opening Game");
+                WindowsVoice.speak("Abriendo juego");
                 break;
             case KeyCode.Alpha3:
-                Debug.Log("Inspector");
-                WindowsVoice.speak("Opening Inspector");
+                WindowsVoice.speak("Abriendo inspector");
                 break;
             case KeyCode.Alpha4:
-                Debug.Log("Hierarchy");
-                WindowsVoice.speak("Opening Hierarchy");
+                WindowsVoice.speak("Abriendo Jerarquía");
                 break;
             case KeyCode.Alpha5:
-                Debug.Log("Project");
-                WindowsVoice.speak("Opening Project");
+                WindowsVoice.speak("Abriendo Proyecto");
                 break;
             case KeyCode.Escape:
-                Debug.Log("Console");
+                WindowsVoice.speak("Abriendo una ventana incompatible");
+                break;
+            case KeyCode.I:
+                WindowsVoice.destroySpeech();
+                WindowsVoice.initSpeech();
                 break;
             default:
                 break;
@@ -172,11 +193,6 @@ static class SceneDetector
 
         var window = EditorWindow.GetWindow<UnityEditor.SceneView>(types);
         
-        Debug.Log(string.Join("\n",
-            AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(type => type.IsClass && !type.IsAbstract 
-            && type.IsSubclassOf(typeof(EditorWindow))).Select(t => t.FullName)));
         */
         var types = new List<Type>()
         { 
