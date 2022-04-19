@@ -1,3 +1,4 @@
+#if (UNITY_EDITOR) 
 using System.Collections;
 
 static class Windows
@@ -9,3 +10,4 @@ static class Windows
     public const string InspectorWindow = "InspectorWindow";
     public const string ProjectBrowser = "ProjectBrowser";
 }
+#endif

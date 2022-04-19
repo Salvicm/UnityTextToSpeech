@@ -1,3 +1,4 @@
+#if (UNITY_EDITOR) 
 using System;
 using System.Reflection;
 using System.Linq;
@@ -14,7 +15,7 @@ static class SceneDetector
     static bool started = false;
 
     static bool pressedControl = false;
-
+    static public bool speak = true;
     static SceneDetector()
     {
 
@@ -78,6 +79,8 @@ static class SceneDetector
             case KeyCode.Alpha4:
                 break;
             case KeyCode.Alpha5:
+                break;
+            case KeyCode.Alpha9:
                 break;
             case KeyCode.Escape:
                 break;
@@ -246,4 +249,5 @@ static class SceneDetector
 
 
     }
-} 
+}
+#endif
