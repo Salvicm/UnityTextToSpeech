@@ -70,28 +70,16 @@ static class SceneDetector
         switch (Event.current.keyCode)
         {
             case KeyCode.Alpha1:
-                WindowsVoice.silence(); 
-                WindowsVoice.speak("Abriendo escena");
                 break;
             case KeyCode.Alpha2:
-                WindowsVoice.silence();
-                WindowsVoice.speak("Abriendo juego");
                 break;
             case KeyCode.Alpha3:
-                WindowsVoice.silence();
-                WindowsVoice.speak("Abriendo inspector");
                 break;
             case KeyCode.Alpha4:
-                WindowsVoice.silence();
-                WindowsVoice.speak("Abriendo Jerarquía");
                 break;
             case KeyCode.Alpha5:
-                WindowsVoice.silence();
-                WindowsVoice.speak("Abriendo Proyecto");
                 break;
             case KeyCode.Escape:
-                WindowsVoice.silence();
-                WindowsVoice.speak("Abriendo una ventana incompatible");
                 break;
       
             default:
@@ -123,9 +111,6 @@ static class SceneDetector
             previousWindow = null;
         }
 
-      
-
-
     }
 
 
@@ -140,20 +125,32 @@ static class SceneDetector
 
             switch (nameOfCurrentWindow)
             {
-               case Windows.SceneHierarchyWindow:  
+               case Windows.SceneHierarchyWindow:
+                    WindowsVoice.silence();
+                    WindowsVoice.speak("Abriendo jerarquía");
                     break;
-               case Windows.SceneView:    
+               case Windows.SceneView:
+                    WindowsVoice.silence();
+                    WindowsVoice.speak("Abriendo escena");
                     break;
-               case Windows.GameView:     
+               case Windows.GameView:
+                    WindowsVoice.silence();
+                    WindowsVoice.speak("Abriendo juego");
                     break;
-               case Windows.ConsoleWindow:        
+               case Windows.ConsoleWindow:
+                    WindowsVoice.silence();
+                    WindowsVoice.speak("Abriendo consola");
                     break;
-               case Windows.InspectorWindow:       
+               case Windows.InspectorWindow:
+                    WindowsVoice.silence();
+                    WindowsVoice.speak("Abriendo inspector");
                     break;
                 case Windows.ProjectBrowser:
+                    WindowsVoice.silence();
+                    WindowsVoice.speak("Abriendo explorador de carpetas");
                     break;
                 default:
-                    Debug.Log("Unsuported by voiceOver: " + nameOfCurrentWindow);
+                    Debug.Log("No soportado por el voiceOver: " + nameOfCurrentWindow);
 
                     break;
             }
