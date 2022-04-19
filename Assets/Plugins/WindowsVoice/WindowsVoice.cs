@@ -17,6 +17,9 @@ public static class WindowsVoice {
     public static extern void clearSpeechQueue();
     [DllImport("WindowsVoice")]
     public static extern void statusMessage(StringBuilder str, int length);
+    [DllImport("WindowsVoice")]
+    public static extern void silenceQueue();
+
     private static readonly Destructor Finalise = new Destructor();
 
     static WindowsVoice()
@@ -36,6 +39,12 @@ public static class WindowsVoice {
     
       if ( delay == 0f )
         addToSpeechQueue(msg);
+    }
+    public static void silence()
+    {
+        WindowsVoice.silenceQueue();
+        WindowsVoice.speak("");
+
     }
     public static string GetStatusMessage()
     {

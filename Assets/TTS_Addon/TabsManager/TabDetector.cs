@@ -70,27 +70,30 @@ static class SceneDetector
         switch (Event.current.keyCode)
         {
             case KeyCode.Alpha1:
+                WindowsVoice.silence(); 
                 WindowsVoice.speak("Abriendo escena");
                 break;
             case KeyCode.Alpha2:
+                WindowsVoice.silence();
                 WindowsVoice.speak("Abriendo juego");
                 break;
             case KeyCode.Alpha3:
+                WindowsVoice.silence();
                 WindowsVoice.speak("Abriendo inspector");
                 break;
             case KeyCode.Alpha4:
+                WindowsVoice.silence();
                 WindowsVoice.speak("Abriendo Jerarquía");
                 break;
             case KeyCode.Alpha5:
+                WindowsVoice.silence();
                 WindowsVoice.speak("Abriendo Proyecto");
                 break;
             case KeyCode.Escape:
+                WindowsVoice.silence();
                 WindowsVoice.speak("Abriendo una ventana incompatible");
                 break;
-            case KeyCode.I:
-                WindowsVoice.destroySpeech();
-                WindowsVoice.initSpeech();
-                break;
+      
             default:
                 break;
         }
