@@ -1,4 +1,3 @@
-#if (UNITY_EDITOR) 
 using System;
 using System.Reflection;
 using System.Linq;
@@ -15,7 +14,6 @@ static class SceneDetector
     static bool started = false;
 
     static bool pressedControl = false;
-    static public bool speak = true;
     static SceneDetector()
     {
 
@@ -27,6 +25,7 @@ static class SceneDetector
             .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
         EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
         value += EditorGlobalKeyPress;
+        
         info.SetValue(null, value);
 
         var types = AppDomain.CurrentDomain.GetAssemblies()
@@ -51,6 +50,7 @@ static class SceneDetector
         Debug.Log(superString);
         if (!SessionState.GetBool("FirstInitDone", false))
         {
+            SessionState.SetBool("Speak", true);
             WindowsVoice.speak("Inicializando TTS");
             SessionState.SetBool("FirstInitDone", true);
         }
@@ -58,40 +58,37 @@ static class SceneDetector
 
 
     }
+
     static void EditorGlobalKeyPress()
     {
         Event current = Event.current;
 
         if (Event.current.keyCode == KeyCode.LeftControl) // TODO cambiar esto para que sea 1 click
         {
-            pressedControl = true;
+            if (current.type == EventType.KeyDown)
+            {
+                pressedControl = true;
+            }
+            else if(current.type == EventType.KeyUp)
+            {
+                pressedControl = false;
+            }
         }
         
-        if (!pressedControl) return;
+        if (!pressedControl || current.type != EventType.KeyUp) return;
         switch (Event.current.keyCode)
         {
-            case KeyCode.Alpha1:
+            case KeyCode.L:
+                SessionState.SetBool("Speak", !SessionState.GetBool("Speak", true));
                 break;
-            case KeyCode.Alpha2:
-                break;
-            case KeyCode.Alpha3:
-                break;
-            case KeyCode.Alpha4:
-                break;
-            case KeyCode.Alpha5:
-                break;
-            case KeyCode.Alpha9:
-                break;
-            case KeyCode.Escape:
-                break;
-      
+          
             default:
                 break;
         }
     }
+    
     static void Update()
     {
-       
         if (currentWindow == null && !started)
         {
             started = true;
@@ -115,9 +112,6 @@ static class SceneDetector
         }
 
     }
-
-
-
 
     static void WindowsChecker()
     {
@@ -159,8 +153,7 @@ static class SceneDetector
             }
         }
         
-        
-   
+
         // TODO 
         /* Close all tabs except basic and set layout 
          * Autoclose tabs?
@@ -173,8 +166,6 @@ static class SceneDetector
         previousWindow = currentWindow;
     }
 
- 
- 
     static void ShowInspectorEditorWindow()
     {
         ShowEditorWindowWithTypeName(Windows.InspectorWindow);
@@ -246,8 +237,6 @@ static class SceneDetector
                 break;
 
         }
-
-
     }
 }
-#endif
+

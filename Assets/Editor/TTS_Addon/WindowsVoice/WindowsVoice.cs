@@ -37,10 +37,12 @@ public static class WindowsVoice {
     }
     public static void speak(string msg, float delay = 0f) {
 
-        if (SceneDetector.speak == true)
+        if (SessionState.GetBool("Speak", true) == true)
         {
             if (delay == 0f)
-                addToSpeechQueue(msg);
+            {
+                // addToSpeechQueue(msg);
+            }
         }
     }
     public static void silence()
