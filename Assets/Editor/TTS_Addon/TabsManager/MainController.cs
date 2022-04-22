@@ -1,3 +1,5 @@
+#if (UNITY_EDITOR) 
+
 using System;
 using System.Reflection;
 using System.Linq;
@@ -6,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 [InitializeOnLoad]
-static class SceneDetector
+static class MainController
 {
 
     static EditorWindow previousWindow, currentWindow;
@@ -14,7 +16,7 @@ static class SceneDetector
     static bool started = false;
 
     static bool pressedControl = false;
-    static SceneDetector()
+    static MainController()
     {
 
         EditorApplication.update += Update;
@@ -50,7 +52,6 @@ static class SceneDetector
         Debug.Log(superString);
         if (!SessionState.GetBool("FirstInitDone", false))
         {
-            SessionState.SetBool("Speak", true);
             WindowsVoice.speak("Inicializando TTS");
             SessionState.SetBool("FirstInitDone", true);
         }
@@ -79,9 +80,12 @@ static class SceneDetector
         switch (Event.current.keyCode)
         {
             case KeyCode.L:
-                SessionState.SetBool("Speak", !SessionState.GetBool("Speak", true));
+                WindowsVoice.initSpeech();
                 break;
-          
+            case KeyCode.U:
+                WindowsVoice.destroySpeech();
+
+                break;
             default:
                 break;
         }
@@ -97,12 +101,12 @@ static class SceneDetector
             currentWindow = EditorWindow.focusedWindow;
         }else if(currentWindow == null && started)
         {
-            //Debug.Log("a"); 
+            // No hagas nada, podría ser cosa del usuario
         }
         currentWindow = EditorWindow.focusedWindow;
         if (currentWindow != null)
         {
-            WindowsChecker();
+            WindowFocusDetector();
         }
         else
         {
@@ -113,7 +117,7 @@ static class SceneDetector
 
     }
 
-    static void WindowsChecker()
+    static void WindowFocusDetector()
     {
         if (currentWindow != previousWindow)
         {
@@ -240,3 +244,4 @@ static class SceneDetector
     }
 }
 
+#endif
