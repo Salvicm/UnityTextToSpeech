@@ -41,7 +41,7 @@ public static class WindowsVoice {
         {
             if (delay == 0f)
             {
-                // addToSpeechQueue(msg);
+                addToSpeechQueue(msg);
             }
         }
     }
