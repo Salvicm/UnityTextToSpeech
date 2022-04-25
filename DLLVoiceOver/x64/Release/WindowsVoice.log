@@ -1,0 +1,9 @@
+﻿  dllmain.cpp
+C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\dllmain.cpp(128,33): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+     Creando biblioteca C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\\libs\WindowsVoice.lib y objeto C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\\libs\WindowsVoice.exp
+  Generando código
+  2 of 174 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  WindowsVoice.vcxproj -> C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\libs\WindowsVoice.dll
