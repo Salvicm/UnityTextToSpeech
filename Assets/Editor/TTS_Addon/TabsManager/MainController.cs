@@ -14,13 +14,11 @@ static class MainController
     static EditorWindow previousWindow, currentWindow;
     static string nameOfCurrentWindow = "";
     static bool started = false;
-
-    static bool pressedControl = false;
     static MainController()
     {
+        nameOfCurrentWindow = SessionState.GetString("LastOpenWindows", "");
 
         EditorApplication.update += Update;
-
 
         // Key presses
         System.Reflection.FieldInfo info = typeof(EditorApplication)
@@ -30,61 +28,45 @@ static class MainController
         
         info.SetValue(null, value);
 
-        var types = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(type => type.IsClass && !type.IsAbstract &&
-            type.IsSubclassOf(typeof(EditorWindow))).ToArray();
-
-        string superString = "";
-        //foreach (var item in types)
-        //{
-        //    superString += "- " + item.Name + "\n";
-        //    foreach(var x in item.GetMethods())
-        //    {
-        //        superString += "--- " + x.Name + "\n";
-        //        foreach(var j in x.GetParameters())
-        //        {
-        //            superString += "----- " + j.Name + "\n";
-
-        //        }
-        //    }
-        //}
-        Debug.Log(superString);
+        //var types = AppDomain.CurrentDomain.GetAssemblies()
+        //    .SelectMany(assembly => assembly.GetTypes())
+        //    .Where(type => type.IsClass && !type.IsAbstract &&
+        //    type.IsSubclassOf(typeof(EditorWindow))).ToArray();
+        
+        
+        if (!SessionState.GetBool("CanSpeak", true))
+        {
+            WindowsVoice.destroySpeech();
+        }
         if (!SessionState.GetBool("FirstInitDone", false))
         {
+            
             WindowsVoice.speak("Inicializando TTS");
             SessionState.SetBool("FirstInitDone", true);
         }
-        // Aquí los mencionará todos // No ha sido buena idea, tengo que encontrar la manera de obligarlo a callar.
-
-
     }
 
     static void EditorGlobalKeyPress()
     {
         Event current = Event.current;
 
-        if (Event.current.keyCode == KeyCode.LeftControl) // TODO cambiar esto para que sea 1 click
-        {
-            if (current.type == EventType.KeyDown)
-            {
-                pressedControl = true;
-            }
-            else if(current.type == EventType.KeyUp)
-            {
-                pressedControl = false;
-            }
-        }
-        
-        if (!pressedControl || current.type != EventType.KeyUp) return;
+                
+        if (!current.control || current.type != EventType.KeyUp) return;
         switch (Event.current.keyCode)
         {
             case KeyCode.L:
                 WindowsVoice.initSpeech();
+                SessionState.SetBool("CanSpeak", true);
+                WindowsVoice.silence();
+                WindowsVoice.speak("Inicializando TTS");
                 break;
             case KeyCode.U:
+                WindowsVoice.silence();
                 WindowsVoice.destroySpeech();
+                SessionState.SetBool("CanSpeak", false);
 
+                break;
+            case KeyCode.I:
                 break;
             default:
                 break;
@@ -123,6 +105,7 @@ static class MainController
         {
             nameOfCurrentWindow = currentWindow.GetType().Name;
             Debug.Log(nameOfCurrentWindow);
+            SessionState.SetString("LastOpenWindows", nameOfCurrentWindow);
 
             switch (nameOfCurrentWindow)
             {
@@ -151,7 +134,7 @@ static class MainController
                     WindowsVoice.speak("Abriendo explorador de carpetas");
                     break;
                 default:
-                    Debug.Log("No soportado por el voiceOver: " + nameOfCurrentWindow);
+                    WindowsVoice.speak("Se ha abierto la ventana: " + nameOfCurrentWindow + ". Actualmente no soportada por el TTS");
 
                     break;
             }
@@ -170,6 +153,7 @@ static class MainController
         previousWindow = currentWindow;
     }
 
+
     static void ShowInspectorEditorWindow()
     {
         ShowEditorWindowWithTypeName(Windows.InspectorWindow);
@@ -183,15 +167,7 @@ static class MainController
     static void ShowEditorWindowWithTypeName(string windowTypeName)
     {
 
-        /*
-        var types = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(type =>type.IsClass && !type.IsAbstract && 
-            type.IsSubclassOf(typeof(EditorWindow))).ToArray();
-
-        var window = EditorWindow.GetWindow<UnityEditor.SceneView>(types);
         
-        */
         var types = new List<Type>()
         { 
             // first add your preferences
@@ -202,13 +178,7 @@ static class MainController
             typeof(Editor).Assembly.GetType("UnityEditor.ProjectBrowser"),
             typeof(Editor).Assembly.GetType("UnityEditor.InspectorWindow")
         };
-        /*
-        // and then add all others as fallback (who cares about duplicates at this point ? ;) )
-        types.AddRange(AppDomain.CurrentDomain.GetAssemblies().
-        SelectMany(assembly => assembly.GetTypes())
-        .Where(type => type.IsClass && !type.IsAbstract 
-        && type.IsSubclassOf(typeof(EditorWindow))));
-        */
+
    
         switch (windowTypeName)
         {
