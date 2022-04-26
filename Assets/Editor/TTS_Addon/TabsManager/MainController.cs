@@ -20,14 +20,14 @@ class MainController
 
         EditorApplication.update += Update;
 
-        // Key presses
+       /* // Key presses
         System.Reflection.FieldInfo info = typeof(EditorApplication)
             .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
         EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
         value += EditorGlobalKeyPress;
         
         info.SetValue(null, value);
-
+       */
         //var types = AppDomain.CurrentDomain.GetAssemblies()
         //    .SelectMany(assembly => assembly.GetTypes())
         //    .Where(type => type.IsClass && !type.IsAbstract &&
@@ -52,44 +52,7 @@ class MainController
 
                 
         if ((!current.alt && !current.control)|| current.type != EventType.KeyUp) return;
-        switch (Event.current.keyCode)
-        {
-            case KeyCode.L:
-                WindowsVoice.initSpeech();
-                SessionState.SetBool("CanSpeak", true);
-                WindowsVoice.silence();
-                WindowsVoice.speak("Inicializando TTS");
-                break;
-            case KeyCode.U:
-                WindowsVoice.silence();
-                WindowsVoice.destroySpeech();
-                SessionState.SetBool("CanSpeak", false);
-                break;
-
-            case KeyCode.A:
-                currentTabController.advanceButton();
-                break;
-            case KeyCode.S:
-                currentTabController.regressionButton();
-                break;
-            case KeyCode.X:
-                currentTabController.generalButton();
-                break;
-            case KeyCode.C:
-                currentTabController.infoButton();
-                break;
-            case KeyCode.B:
-                currentTabController.buttonA();
-                break;
-            case KeyCode.N:
-                currentTabController.buttonB();
-                break;
-            case KeyCode.M:
-                currentTabController.buttonC();
-                break;
-            default:
-                break;
-        }
+        
     }
     
     static void Update()
@@ -238,6 +201,77 @@ class MainController
 
         }
     }
+
+
+
+    #region MenuItems
+    [MenuItem("TTS/enable %&L")]
+    static void LoadTTS()
+    {
+        WindowsVoice.initSpeech();
+        SessionState.SetBool("CanSpeak", true);
+        WindowsVoice.silence();
+        WindowsVoice.speak("Inicializando TTS");
+    }
+
+    [MenuItem("TTS/disable %&U")]
+    static void UnloadTTS()
+    {
+        WindowsVoice.silence();
+        WindowsVoice.destroySpeech();
+        SessionState.SetBool("CanSpeak", false);
+    }
+
+    [MenuItem("TTS/AdvanceTab %&D")]
+    static void SelectedTabAdvanceButton()//d
+    {
+        currentTabController.advanceButton();
+
+    }
+
+    [MenuItem("TTS/RegresTab %&A")]
+    static void SelectedTabRegressButton()//a
+    {
+        currentTabController.regressionButton();
+    }
+
+    [MenuItem("TTS/GeneralButton %&X")]
+    static void SelectedTabGeneralButton()//x
+    {
+        currentTabController.generalButton();
+
+    }
+
+    [MenuItem("TTS/InfoButton %&C")]
+    static void SelectedTabInfoButton()
+    {
+        currentTabController.infoButton();
+
+    }
+
+    [MenuItem("TTS/TabUtilA %&B")]
+    static void SelectedTabButtonA()
+    {
+        currentTabController.buttonA();
+
+    }
+
+    [MenuItem("TTS/TabUtilB %&N")]
+    static void SelectedTabButtonB()
+    {
+        currentTabController.buttonB();
+
+    }
+
+    [MenuItem("TTS/TabUtilC %&M")]
+    static void SelectedTabButtonC()
+    {
+        currentTabController.buttonC();
+
+    }
+
+    #endregion
+
 }
 
 #endif
