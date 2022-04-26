@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 [InitializeOnLoad]
-static class MainController
+class MainController
 {
-
+    static TabController currentTabController;
     static EditorWindow previousWindow, currentWindow;
     static string nameOfCurrentWindow = "";
     static bool started = false;
@@ -32,7 +32,7 @@ static class MainController
         //    .SelectMany(assembly => assembly.GetTypes())
         //    .Where(type => type.IsClass && !type.IsAbstract &&
         //    type.IsSubclassOf(typeof(EditorWindow))).ToArray();
-        
+        currentTabController = new HierarchyTabController();
         
         if (!SessionState.GetBool("CanSpeak", true))
         {
@@ -51,7 +51,7 @@ static class MainController
         Event current = Event.current;
 
                 
-        if (!current.control || current.type != EventType.KeyUp) return;
+        if ((!current.alt && !current.control)|| current.type != EventType.KeyUp) return;
         switch (Event.current.keyCode)
         {
             case KeyCode.L:
@@ -64,9 +64,25 @@ static class MainController
                 WindowsVoice.silence();
                 WindowsVoice.destroySpeech();
                 SessionState.SetBool("CanSpeak", false);
-
                 break;
-            case KeyCode.I:
+
+            case KeyCode.M:
+                currentTabController.generalButton();
+                break;
+            case KeyCode.X:
+                currentTabController.advanceButton();
+                break;
+            case KeyCode.C:
+                currentTabController.regressionButton();
+                break;
+            case KeyCode.V:
+                currentTabController.buttonA();
+                break;
+            case KeyCode.B:
+                currentTabController.buttonB();
+                break;
+            case KeyCode.N:
+                currentTabController.buttonC();
                 break;
             default:
                 break;
@@ -96,7 +112,7 @@ static class MainController
                 Debug.Log("Nothing Selected");
             previousWindow = null;
         }
-
+        currentTabController.Update();
     }
 
     static void WindowFocusDetector()
@@ -104,32 +120,37 @@ static class MainController
         if (currentWindow != previousWindow)
         {
             nameOfCurrentWindow = currentWindow.GetType().Name;
-            Debug.Log(nameOfCurrentWindow);
             SessionState.SetString("LastOpenWindows", nameOfCurrentWindow);
 
             switch (nameOfCurrentWindow)
             {
                case Windows.SceneHierarchyWindow:
+                    currentTabController = new HierarchyTabController();
                     WindowsVoice.silence();
                     WindowsVoice.speak("Abriendo jerarquía");
                     break;
                case Windows.SceneView:
+                    // currentTabController = new SceneTabController();
                     WindowsVoice.silence();
                     WindowsVoice.speak("Abriendo escena");
                     break;
                case Windows.GameView:
+                    // currentTabController = new GameTabController();
                     WindowsVoice.silence();
                     WindowsVoice.speak("Abriendo juego");
                     break;
                case Windows.ConsoleWindow:
+                    // currentTabController = new ConsoleTabController();
                     WindowsVoice.silence();
                     WindowsVoice.speak("Abriendo consola");
                     break;
                case Windows.InspectorWindow:
+                    // currentTabController = new InspectorTabController();
                     WindowsVoice.silence();
                     WindowsVoice.speak("Abriendo inspector");
                     break;
                 case Windows.ProjectBrowser:
+                    // currentTabController = new ProjectTabController();
                     WindowsVoice.silence();
                     WindowsVoice.speak("Abriendo explorador de carpetas");
                     break;
@@ -138,6 +159,7 @@ static class MainController
 
                     break;
             }
+            currentTabController.init();
         }
         
 
