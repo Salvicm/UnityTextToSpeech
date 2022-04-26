@@ -24,6 +24,11 @@ public class InspectorTabController : TabController
         throw new System.NotImplementedException();
     }
 
+    public override void clean()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void generalButton()
     {
         throw new System.NotImplementedException();

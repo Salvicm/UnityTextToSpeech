@@ -66,22 +66,25 @@ class MainController
                 SessionState.SetBool("CanSpeak", false);
                 break;
 
-            case KeyCode.M:
-                currentTabController.generalButton();
-                break;
-            case KeyCode.X:
+            case KeyCode.A:
                 currentTabController.advanceButton();
                 break;
-            case KeyCode.C:
+            case KeyCode.S:
                 currentTabController.regressionButton();
                 break;
-            case KeyCode.V:
-                currentTabController.buttonA();
+            case KeyCode.X:
+                currentTabController.generalButton();
+                break;
+            case KeyCode.C:
+                currentTabController.infoButton();
                 break;
             case KeyCode.B:
-                currentTabController.buttonB();
+                currentTabController.buttonA();
                 break;
             case KeyCode.N:
+                currentTabController.buttonB();
+                break;
+            case KeyCode.M:
                 currentTabController.buttonC();
                 break;
             default:
@@ -119,6 +122,7 @@ class MainController
     {
         if (currentWindow != previousWindow)
         {
+            currentTabController.clean();
             nameOfCurrentWindow = currentWindow.GetType().Name;
             SessionState.SetString("LastOpenWindows", nameOfCurrentWindow);
 

@@ -19,6 +19,8 @@ abstract public class TabController
     abstract public void buttonA(); // Por si necesito botones extras
     abstract public void buttonB(); // Por si necesito botones extras
     abstract public void buttonC(); // Por si necesito botones extras 
+    abstract public void clean();
+
 }
 #endif
 
