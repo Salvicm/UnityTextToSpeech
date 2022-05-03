@@ -7,6 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.ShortcutManagement;
+
 [InitializeOnLoad]
 class MainController
 {
@@ -20,28 +22,33 @@ class MainController
 
         EditorApplication.update += Update;
 
-       /* // Key presses
-        System.Reflection.FieldInfo info = typeof(EditorApplication)
-            .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-        EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
-        value += EditorGlobalKeyPress;
-        
-        info.SetValue(null, value);
-       */
+        /* // Key presses
+         System.Reflection.FieldInfo info = typeof(EditorApplication)
+             .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+         EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
+         value += EditorGlobalKeyPress;
+
+         info.SetValue(null, value);
+        */
         //var types = AppDomain.CurrentDomain.GetAssemblies()
         //    .SelectMany(assembly => assembly.GetTypes())
         //    .Where(type => type.IsClass && !type.IsAbstract &&
         //    type.IsSubclassOf(typeof(EditorWindow))).ToArray();
         currentTabController = new HierarchyTabController();
-        
+
         if (!SessionState.GetBool("CanSpeak", true))
         {
             WindowsVoice.destroySpeech();
         }
         if (!SessionState.GetBool("FirstInitDone", false))
         {
-            
-            WindowsVoice.speak("Inicializando TTS");
+           
+            //Force rebind
+            KeyCombination keyCombination = new KeyCombination(KeyCode.O);
+            ShortcutBinding binding = new ShortcutBinding(keyCombination);
+            ShortcutManager.instance.RebindShortcut("Stage/Go Back", binding);
+
+            WindowsVoice.speak(TextHolder.InitializingTTS);
             SessionState.SetBool("FirstInitDone", true);
         }
     }
@@ -88,45 +95,70 @@ class MainController
             currentTabController.clean();
             nameOfCurrentWindow = currentWindow.GetType().Name;
             SessionState.SetString("LastOpenWindows", nameOfCurrentWindow);
-
+            bool actuallyChanged = false;    
             switch (nameOfCurrentWindow)
             {
-               case Windows.SceneHierarchyWindow:
-                    currentTabController = new HierarchyTabController();
-                    WindowsVoice.silence();
-                    WindowsVoice.speak("Abriendo jerarquía");
+                case Windows.SceneHierarchyWindow:
+                    if (currentTabController.GetType() != typeof(HierarchyTabController))
+                    {
+                        currentTabController = new HierarchyTabController();
+                        actuallyChanged = true;
+                    }
+                        WindowsVoice.silence();
+                        WindowsVoice.speak(TextHolder.OpenHierarchy);
                     break;
-               case Windows.SceneView:
-                    // currentTabController = new SceneTabController();
-                    WindowsVoice.silence();
-                    WindowsVoice.speak("Abriendo escena");
+                case Windows.SceneView:
+                    if (currentTabController.GetType() != typeof(SceneTabController))
+                    {
+                        // currentTabController = new SceneTabController();
+                        actuallyChanged = true;
+                    }
+                        WindowsVoice.silence();
+                        WindowsVoice.speak(TextHolder.OpenScene);
                     break;
                case Windows.GameView:
-                    // currentTabController = new GameTabController();
-                    WindowsVoice.silence();
-                    WindowsVoice.speak("Abriendo juego");
+                    if (currentTabController.GetType() != typeof(GameTabController))
+                    {
+                        // currentTabController = new GameTabController();
+                        actuallyChanged = true;
+                    }
+                        WindowsVoice.silence();
+                        WindowsVoice.speak(TextHolder.OpenGame);
                     break;
                case Windows.ConsoleWindow:
-                    // currentTabController = new ConsoleTabController();
-                    WindowsVoice.silence();
-                    WindowsVoice.speak("Abriendo consola");
+                    if (currentTabController.GetType() != typeof(ConsoleTabController))
+                    {
+                        // currentTabController = new ConsoleTabController();
+                        actuallyChanged = true;
+                    }
+                        WindowsVoice.silence();
+                        WindowsVoice.speak(TextHolder.OpenConsole);
                     break;
                case Windows.InspectorWindow:
-                    // currentTabController = new InspectorTabController();
-                    WindowsVoice.silence();
-                    WindowsVoice.speak("Abriendo inspector");
+                    if (currentTabController.GetType() != typeof(InspectorTabController))
+                    {
+                        // currentTabController = new InspectorTabController();
+                        actuallyChanged = true;
+                    }
+                        WindowsVoice.silence();
+                        WindowsVoice.speak(TextHolder.OpenInspector);
                     break;
                 case Windows.ProjectBrowser:
-                    // currentTabController = new ProjectTabController();
-                    WindowsVoice.silence();
-                    WindowsVoice.speak("Abriendo explorador de carpetas");
+                    if (currentTabController.GetType() != typeof(InspectorTabController))
+                    {
+                        // currentTabController = new ProjectTabController();
+                        actuallyChanged = true;
+                    }
+                        WindowsVoice.silence();
+                        WindowsVoice.speak(TextHolder.OpenInspector);
                     break;
                 default:
-                    WindowsVoice.speak("Se ha abierto la ventana: " + nameOfCurrentWindow + ". Actualmente no soportada por el TTS");
+                    WindowsVoice.speak(TextHolder.OpeningUnsuportedScene + nameOfCurrentWindow);
 
                     break;
             }
-            currentTabController.init();
+            if(actuallyChanged)
+                currentTabController.init();
         }
         
 
@@ -211,7 +243,7 @@ class MainController
         WindowsVoice.initSpeech();
         SessionState.SetBool("CanSpeak", true);
         WindowsVoice.silence();
-        WindowsVoice.speak("Inicializando TTS");
+        WindowsVoice.speak(TextHolder.InitializingTTS);
     }
 
     [MenuItem("TTS/disable %&U")]
@@ -269,6 +301,22 @@ class MainController
         currentTabController.buttonC();
 
     }
+
+    [MenuItem("TTS/Helper/ClearPrefab %&K")]
+    static void silence()
+    {
+
+        WindowsVoice.silence();
+    }
+
+    //No parece poder hacerse
+    //[MenuItem("TTS/Helper/CustomClosePrefab _o")]
+    //static void closePrefab()
+    //{
+
+    //    EditorApplication.ExecuteMenuItem("Stage/Go back");
+    //    Debug.Log("A");
+    //}
 
     #endregion
 

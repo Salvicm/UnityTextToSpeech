@@ -7,6 +7,7 @@ using UnityEditor.SceneManagement;
 public class HierarchyTabController : TabController
 {
     static GameObject[] list;
+
     public HierarchyTabController()
     {
         Selection.selectionChanged += OnChangeSelection;
@@ -18,7 +19,6 @@ public class HierarchyTabController : TabController
     {
         // activeGameObject = Jerarquía
         // activeObject = Inspector
-        Debug.Log("Initting Hierarchy tab controller");
         list = new GameObject[SceneManager.GetActiveScene().rootCount];
         list = SceneManager.GetActiveScene().GetRootGameObjects();
         if(Selection.activeGameObject == null) 
@@ -31,13 +31,11 @@ public class HierarchyTabController : TabController
         if (Selection.activeGameObject.transform.childCount > 0) {
             Transform[] allChildren = Selection.activeGameObject.GetComponentsInChildren<Transform>();
 
-            Debug.Log("- Object: " + Selection.activeGameObject.name + " has: " + Selection.activeGameObject.transform.childCount + " children");
-
-            Debug.Log("-- Child Names:");
+            WindowsVoice.speak(Selection.activeGameObject.name + TextHolder.ChildrenList + Selection.activeGameObject.transform.childCount + TextHolder.Children);
             for (int i = 1; i < allChildren.Length; i++)
             {
                 if(allChildren[i].gameObject.transform.parent.gameObject == Selection.activeGameObject.transform.gameObject)
-                    Debug.Log("--- " + allChildren[i].gameObject.name);
+                WindowsVoice.speak(allChildren[i].gameObject.name);
             }
         }
     }
@@ -47,12 +45,13 @@ public class HierarchyTabController : TabController
     }
     public override void generalButton()
     {
-        Debug.Log("__________");
-        Debug.Log("- Object: " + Selection.activeGameObject.name);
+        
+        WindowsVoice.speak(Selection.activeGameObject.name);
         if (Selection.activeGameObject.transform.parent != null)
-            Debug.Log("-- Parent: " + Selection.activeGameObject.transform.parent.name);
+            WindowsVoice.speak(TextHolder.HasParent + Selection.activeGameObject.transform.parent.name);
         if (Selection.activeGameObject.transform.childCount > 0)
-            Debug.Log("-- Number of children: " + Selection.activeGameObject.transform.childCount);
+            WindowsVoice.speak(TextHolder.ChildrenList + Selection.activeGameObject.transform.childCount + TextHolder.Children);
+
     }
     public override void infoButton()
     {
