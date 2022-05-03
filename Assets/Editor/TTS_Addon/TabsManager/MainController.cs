@@ -92,17 +92,16 @@ class MainController
     {
         if (currentWindow != previousWindow)
         {
-            currentTabController.clean();
             nameOfCurrentWindow = currentWindow.GetType().Name;
             SessionState.SetString("LastOpenWindows", nameOfCurrentWindow);
-            bool actuallyChanged = false;    
+            currentTabController.clean();
+
             switch (nameOfCurrentWindow)
             {
                 case Windows.SceneHierarchyWindow:
                     if (currentTabController.GetType() != typeof(HierarchyTabController))
                     {
                         currentTabController = new HierarchyTabController();
-                        actuallyChanged = true;
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenHierarchy);
@@ -111,7 +110,6 @@ class MainController
                     if (currentTabController.GetType() != typeof(SceneTabController))
                     {
                         // currentTabController = new SceneTabController();
-                        actuallyChanged = true;
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenScene);
@@ -120,7 +118,6 @@ class MainController
                     if (currentTabController.GetType() != typeof(GameTabController))
                     {
                         // currentTabController = new GameTabController();
-                        actuallyChanged = true;
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenGame);
@@ -129,7 +126,6 @@ class MainController
                     if (currentTabController.GetType() != typeof(ConsoleTabController))
                     {
                         // currentTabController = new ConsoleTabController();
-                        actuallyChanged = true;
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenConsole);
@@ -138,7 +134,6 @@ class MainController
                     if (currentTabController.GetType() != typeof(InspectorTabController))
                     {
                         // currentTabController = new InspectorTabController();
-                        actuallyChanged = true;
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenInspector);
@@ -147,7 +142,6 @@ class MainController
                     if (currentTabController.GetType() != typeof(InspectorTabController))
                     {
                         // currentTabController = new ProjectTabController();
-                        actuallyChanged = true;
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenInspector);
@@ -157,10 +151,12 @@ class MainController
 
                     break;
             }
-            if(actuallyChanged)
-                currentTabController.init();
+ 
+            
+            currentTabController.init();
+
         }
-        
+
 
         // TODO 
         /* Close all tabs except basic and set layout 
@@ -170,7 +166,7 @@ class MainController
          * Has unsaved stuff
          * 
          */
-       
+
         previousWindow = currentWindow;
     }
 

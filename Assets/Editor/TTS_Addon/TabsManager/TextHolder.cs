@@ -21,7 +21,8 @@ static class TextHolder
     public const string ChildrenList = "tiene un total de ";
     public const string Children = "hijos";
     public const string HasParent = "Tiene padre";
-
-
+    public const string IsAPrefab = "Es un prefab";
+    public const string NotAPrefab = "No es un prefab";
+    public const string CurrentlyEditingPrefab = "Editando el prefab: ";
 }
 #endif

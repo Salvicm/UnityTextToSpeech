@@ -10,7 +10,6 @@ public class HierarchyTabController : TabController
 
     public HierarchyTabController()
     {
-        Selection.selectionChanged += OnChangeSelection;
     }
     ~HierarchyTabController()
     {
@@ -23,11 +22,13 @@ public class HierarchyTabController : TabController
         list = SceneManager.GetActiveScene().GetRootGameObjects();
         if(Selection.activeGameObject == null) 
             Selection.activeGameObject = list[0];
-        
-        
+        Selection.selectionChanged += OnChangeSelection;
+
+
     }
     public override void advanceButton()
     {
+        if (Selection.activeGameObject == null) return;
         if (Selection.activeGameObject.transform.childCount > 0) {
             Transform[] allChildren = Selection.activeGameObject.GetComponentsInChildren<Transform>();
 
@@ -41,17 +42,18 @@ public class HierarchyTabController : TabController
     }
     public override void regressionButton()
     {
-        Debug.Log("Regress");
+        if (Selection.activeGameObject == null) return;
+        if (Selection.activeGameObject.transform.parent != null)
+            WindowsVoice.speak(TextHolder.HasParent + Selection.activeGameObject.transform.parent.name);
     }
     public override void generalButton()
     {
-        
+        if (Selection.activeGameObject == null) return;
         WindowsVoice.speak(Selection.activeGameObject.name);
         if (Selection.activeGameObject.transform.parent != null)
             WindowsVoice.speak(TextHolder.HasParent + Selection.activeGameObject.transform.parent.name);
         if (Selection.activeGameObject.transform.childCount > 0)
             WindowsVoice.speak(TextHolder.ChildrenList + Selection.activeGameObject.transform.childCount + TextHolder.Children);
-
     }
     public override void infoButton()
     {
@@ -77,47 +79,52 @@ public class HierarchyTabController : TabController
         /* Información necesaria:
          * Explicar todos los shortcuts de este modo, como por ejemplo abrir el editor de prefabs si un objeto es prefab
          * * Nombre del objeto ________________________________ General Button // Done
-         * * Nombre del padre, si tiene _______________________ General Button / Regression button // Falta
+         * * Nombre del padre, si tiene _______________________ General Button / Regression button // Done
          * * Cantidad de hijos ________________________________ General Button / Advance Button  // Done
          * * * Listado de hijos _______________________________ Button A / Advance Button        // Done
          * * Nombre del siguiente y del anterior objeto? ______ Button B // No se si esto es posible // Falta
-         * * Comprueba si es prefab y si estás en modo editar _ Button C // Con la P se abre el menú y con la O se cierra // TODO Ver si puedo asignarlo por código, la O no está de base. O cerrarlo por código
-         */
-        if (Selection.activeGameObject.transform.childCount == 0) return;
-        Transform[] allChildren = Selection.activeGameObject.GetComponentsInChildren<Transform>();
-        Debug.Log("__________");
-
-        Debug.Log("- Child Names for: " + Selection.activeGameObject.name);
-        for (int i = 1; i < allChildren.Length; i++)
+         * * Comprueba si es prefab y si estás en modo editar _ Button C // Con la P se abre el menú y con la O se cierra // Done
+         * */
+        if (Selection.activeGameObject == null) return;
+        if (Selection.activeGameObject.transform.childCount > 0)
         {
-            if (allChildren[i].gameObject.transform.parent.gameObject == Selection.activeGameObject.transform.gameObject)
-                Debug.Log("-- " + allChildren[i].gameObject.name);
+            Transform[] allChildren = Selection.activeGameObject.GetComponentsInChildren<Transform>();
+            for (int i = 1; i < allChildren.Length; i++)
+            {
+                if (allChildren[i].gameObject.transform.parent.gameObject == Selection.activeGameObject.transform.gameObject)
+                    WindowsVoice.speak(allChildren[i].gameObject.name);
+            }
         }
     }
     public override void buttonB()
     {
+        if (Selection.activeGameObject == null) return;
     }
     public override void buttonC()
     {
+        if (Selection.activeGameObject == null) return;
+        //Es prefab el objeto seleccionado?
         if (PrefabUtility.GetPrefabAssetType(Selection.activeGameObject) != PrefabAssetType.NotAPrefab ||
             PrefabUtility.GetPrefabAssetType(Selection.activeGameObject) != PrefabAssetType.MissingAsset)
         {
-            Debug.Log("Is a prefab");
+            WindowsVoice.speak(TextHolder.IsAPrefab);
         }
         else
         {
-            Debug.Log("Not a prefab");
+            WindowsVoice.speak(TextHolder.NotAPrefab);
+            return;
         }
+        // Está editando ahora mismo prefab?
         if (EditorSceneManager.IsPreviewSceneObject(Selection.activeGameObject))
         {
-            Debug.Log("Editing prefab");
+            WindowsVoice.speak(TextHolder.CurrentlyEditingPrefab + Selection.activeGameObject.transform.root.name);
         }
     }
 
     public void OnChangeSelection()
     {
-        if (Selection.activeGameObject == null) return;
-        Debug.Log(Selection.activeObject.name);
+        //if (Selection.activeGameObject == null) return;
+        WindowsVoice.speak(Selection.activeGameObject.name);
     }
 
     public override void clean()
