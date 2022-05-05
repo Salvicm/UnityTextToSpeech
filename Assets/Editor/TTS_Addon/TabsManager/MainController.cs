@@ -141,7 +141,7 @@ class MainController
                 case Windows.ProjectBrowser:
                     if (currentTabController.GetType() != typeof(InspectorTabController))
                     {
-                        // currentTabController = new ProjectTabController();
+                        currentTabController = new ProjectTabController();
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenInspector);
@@ -298,7 +298,7 @@ class MainController
 
     }
 
-    [MenuItem("TTS/Helper/ClearPrefab %&K")]
+    [MenuItem("TTS/Helper/SilenceVoice %&K")]
     static void silence()
     {
 

@@ -57,7 +57,7 @@ public class HierarchyTabController : TabController
     }
     public override void infoButton()
     {
-        
+        WindowsVoice.speak(TextHolder.HierarchyInfo);
     }
     public override void Update()
     {/*
@@ -123,7 +123,7 @@ public class HierarchyTabController : TabController
 
     public void OnChangeSelection()
     {
-        //if (Selection.activeGameObject == null) return;
+        if (Selection.activeGameObject == null) return;
         WindowsVoice.speak(Selection.activeGameObject.name);
     }
 
