@@ -104,7 +104,7 @@ public class HierarchyTabController : TabController
     {
         if (Selection.activeGameObject == null) return;
         //Es prefab el objeto seleccionado?
-        if (PrefabUtility.GetPrefabAssetType(Selection.activeGameObject) != PrefabAssetType.NotAPrefab ||
+        if (PrefabUtility.GetPrefabAssetType(Selection.activeGameObject) != PrefabAssetType.NotAPrefab &&
             PrefabUtility.GetPrefabAssetType(Selection.activeGameObject) != PrefabAssetType.MissingAsset)
         {
             WindowsVoice.speak(TextHolder.IsAPrefab);
@@ -112,7 +112,6 @@ public class HierarchyTabController : TabController
         else
         {
             WindowsVoice.speak(TextHolder.NotAPrefab);
-            return;
         }
         // Está editando ahora mismo prefab?
         if (EditorSceneManager.IsPreviewSceneObject(Selection.activeGameObject))
