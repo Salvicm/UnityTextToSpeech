@@ -45,7 +45,7 @@ public static class WindowsVoice {
     {
         WindowsVoice.clearSpeechQueue();
         WindowsVoice.silenceQueue();
-        WindowsVoice.speak("");
+        WindowsVoice.speak(TextHolder.voidText);
 
     }
     public static string GetStatusMessage()
