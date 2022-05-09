@@ -1,56 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class ConsoleTabController : TabController
 {
-    public override void advanceButton()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 
-    public override void buttonA()
+    public ConsoleTabController()
     {
-        throw new System.NotImplementedException();
+        
     }
-
-    public override void buttonB()
+    ~ConsoleTabController()
     {
-        throw new System.NotImplementedException();
     }
-
-    public override void buttonC()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void clean()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void generalButton()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void infoButton()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void init()
     {
-        throw new System.NotImplementedException();
+        //Debug.Log(Selection.activeContext.name);
+        return;
     }
-
+    public override void advanceButton()
+    {
+        Debug.Log("A");
+        return;
+    }
     public override void regressionButton()
     {
-        throw new System.NotImplementedException();
+        Debug.LogWarning("B");
+        return;
     }
+    public override void generalButton()
+    {
+        Debug.LogError("C");
+        //Debug.Log(Selection.activeContext.name);
 
+        return;
+    }
+    public override void infoButton()
+    {
+        Debug.Log(MainController.test.Count);
+        //WindowsVoice.speak(TextHolder.ConsoleInfo);
+    }
     public override void Update()
     {
-        throw new System.NotImplementedException();
+        return;
+    }
+    public override void buttonA()
+    {
+        /* Información necesaria:
+         * Explicar todos los shortcuts de este modo, como por ejemplo abrir el editor de prefabs si un objeto es prefab
+         * * Contar cuantos errores, warnings y logs hay ______ General Button
+         * * Leer el último log hecho _________________________ Button A 
+         * * Decir el tipo de último log ______________________ Button B
+         * */
+       
+    }
+    public override void buttonB()
+    {
+        return;
+    }
+    public override void buttonC()
+    {
+        return;
+    }
+
+   
+    public override void clean()
+    {
+        return;
     }
 }

@@ -16,6 +16,12 @@ class MainController
     static EditorWindow previousWindow, currentWindow;
     static string nameOfCurrentWindow = "";
     static bool started = false;
+    public static List<KeyValuePair<string, LogType>> test;
+    public static int warningCount = 0;
+    public static int errorCount = 0;
+    public static int logCount = 0;
+    public static int exceptionCount = 0;
+    public static int assertCount = 0;
     static MainController()
     {
         nameOfCurrentWindow = SessionState.GetString("LastOpenWindows", "");
@@ -35,15 +41,18 @@ class MainController
         //    .Where(type => type.IsClass && !type.IsAbstract &&
         //    type.IsSubclassOf(typeof(EditorWindow))).ToArray();
         currentTabController = new HierarchyTabController();
+        test = new List<KeyValuePair<string, LogType>>();
+        Application.logMessageReceived += HandleLog;
 
-        if (!SessionState.GetBool("CanSpeak", true))
+        if (SessionState.GetBool("CanSpeak", true) == false)
         {
             WindowsVoice.destroySpeech();
         }
-        if (!SessionState.GetBool("FirstInitDone", false))
+        
+        if (EditorPrefs.GetBool("FirstInitDone", false) == false)
         {
-           
             //Force rebind
+            // TEst
             
             KeyCombination keyCombination = new KeyCombination(KeyCode.O);
             ShortcutBinding binding = new ShortcutBinding(keyCombination);
@@ -59,9 +68,8 @@ class MainController
             ShortcutManager.instance.activeProfileId = TextHolder.profileID;
             ShortcutManager.instance.RebindShortcut("Stage/Go Back", binding);
 
-
             WindowsVoice.speak(TextHolder.InitializingTTS);
-            SessionState.SetBool("FirstInitDone", true);
+            EditorPrefs.SetBool("FirstInitDone", true);
         }
     }
 
@@ -137,7 +145,7 @@ class MainController
                case Windows.ConsoleWindow:
                     if (currentTabController.GetType() != typeof(ConsoleTabController))
                     {
-                        // currentTabController = new ConsoleTabController();
+                        currentTabController = new ConsoleTabController();
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenConsole);
@@ -151,7 +159,7 @@ class MainController
                         WindowsVoice.speak(TextHolder.OpenInspector);
                     break;
                 case Windows.ProjectBrowser:
-                    if (currentTabController.GetType() != typeof(InspectorTabController))
+                    if (currentTabController.GetType() != typeof(ProjectTabController))
                     {
                         currentTabController = new ProjectTabController();
                     }
@@ -242,6 +250,30 @@ class MainController
         }
     }
 
+    static void HandleLog(string logString, string stackTrace, LogType type)
+    {
+        test.Add(new KeyValuePair<string, LogType>(logString, type));
+        switch (type)
+        {
+            case LogType.Error:
+                errorCount++;
+                break;
+            case LogType.Assert:
+                assertCount++;
+                break;
+            case LogType.Warning:
+                warningCount++; 
+                break;
+            case LogType.Log:
+                logCount++;
+                break;
+            case LogType.Exception:
+                exceptionCount++;
+                break;
+            default:
+                break;
+        }
+    }
 
 
     #region MenuItems

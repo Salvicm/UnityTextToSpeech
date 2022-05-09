@@ -31,7 +31,7 @@ public static class WindowsVoice {
     }
     public static void speak(string msg, float delay = 0f) {
 
-        if (!SessionState.GetBool("CanSpeak", true))
+        if (SessionState.GetBool("CanSpeak", true) == false)
         {
             return;
         }
