@@ -44,9 +44,21 @@ class MainController
         {
            
             //Force rebind
+            
             KeyCombination keyCombination = new KeyCombination(KeyCode.O);
             ShortcutBinding binding = new ShortcutBinding(keyCombination);
+            bool alreadyExists = false;
+            foreach(string item in ShortcutManager.instance.GetAvailableProfileIds())
+            {
+                Debug.Log(item);
+                if(item == TextHolder.profileID)
+                    alreadyExists = true;
+            }
+            if(!alreadyExists)
+                ShortcutManager.instance.CreateProfile(TextHolder.profileID);
+            ShortcutManager.instance.activeProfileId = TextHolder.profileID;
             ShortcutManager.instance.RebindShortcut("Stage/Go Back", binding);
+
 
             WindowsVoice.speak(TextHolder.InitializingTTS);
             SessionState.SetBool("FirstInitDone", true);

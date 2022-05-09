@@ -80,5 +80,8 @@ static class TextHolder
         "Usa el botón auxiliar 3 para <no implementado>.";
 
 
+
+    public const string profileID = "TTSSC";
+
 }
 #endif
