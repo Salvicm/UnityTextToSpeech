@@ -42,7 +42,7 @@ class MainController
         //    type.IsSubclassOf(typeof(EditorWindow))).ToArray();
         currentTabController = new HierarchyTabController();
         test = new List<KeyValuePair<string, LogType>>();
-        Application.logMessageReceived += HandleLog;
+        //Application.logMessageReceived += HandleLog;
 
         if (SessionState.GetBool("CanSpeak", true) == false)
         {
@@ -73,14 +73,7 @@ class MainController
         }
     }
 
-    static void EditorGlobalKeyPress()
-    {
-        Event current = Event.current;
 
-                
-        if ((!current.alt && !current.control)|| current.type != EventType.KeyUp) return;
-        
-    }
     
     static void Update()
     {

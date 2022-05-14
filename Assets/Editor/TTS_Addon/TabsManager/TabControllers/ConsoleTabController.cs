@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+using UnityEditor.UI;
+using UnityEditor.UIElements;
+
+
 public class ConsoleTabController : TabController
 {
     
@@ -16,8 +20,17 @@ public class ConsoleTabController : TabController
     }
     public override void init()
     {
+        System.Reflection.FieldInfo info = typeof(EditorApplication)
+            .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+        EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
+        value += eventHandle;
         //Debug.Log(Selection.activeContext.name);
         return;
+    }
+    public void eventHandle()
+    {
+        
+        //if (Event.current.type == Pointerevent) return;
     }
     public override void advanceButton()
     {
@@ -43,7 +56,10 @@ public class ConsoleTabController : TabController
     }
     public override void Update()
     {
-        return;
+
+        
+
+       
     }
     public override void buttonA()
     {
@@ -67,6 +83,10 @@ public class ConsoleTabController : TabController
    
     public override void clean()
     {
+        System.Reflection.FieldInfo info = typeof(EditorApplication)
+            .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+        EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
+        value -= eventHandle;
         return;
     }
 }
