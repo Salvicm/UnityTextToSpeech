@@ -10,6 +10,19 @@ using UnityEditor.UIElements;
 public class ConsoleTabController : TabController
 {
     
+    public enum typeOfSelection {OnlyErrors, OnlyWarnings, OnlyLogs, OnlyExceptions, OnlyAsserts, All, Count }
+    public typeOfSelection selectionType = typeOfSelection.OnlyErrors;
+    public int currentSelected = 0;
+
+    /*
+     * Tener una lista para todos los logs, con mayor capacidad de logs
+     * Inicializar el valor al máximo
+     * Al leer, switchear el tipo
+     * Hacer una iteración al ir sumando o bajando, hasta encontrar el siguiente del tipo preseleccionado
+     * Si no se encuentra, se mantiene el último seleccionado
+     * Al inicializarlo, comprobar si el stacktrace es igual al anterior
+     * 
+     */
 
     public ConsoleTabController()
     {
@@ -20,39 +33,36 @@ public class ConsoleTabController : TabController
     }
     public override void init()
     {
-        System.Reflection.FieldInfo info = typeof(EditorApplication)
-            .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-        EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
-        value += eventHandle;
-        //Debug.Log(Selection.activeContext.name);
+        Debug.Log("A");
+        Debug.LogWarning("E");
+        Debug.LogError("O");
+        currentSelected = MainController.ErrorLogs.Count - 1;
         return;
     }
-    public void eventHandle()
-    {
-        
-        //if (Event.current.type == Pointerevent) return;
-    }
+ 
     public override void advanceButton()
     {
-        Debug.Log("A");
-        return;
+        SelectNext(1);
+        WindowsVoice.speak(MainController.ErrorLogs[currentSelected].value);
+        WindowsVoice.speak(MainController.ErrorLogs[currentSelected].type.ToString());
     }
     public override void regressionButton()
     {
-        Debug.LogWarning("B");
-        return;
+
+        SelectNext(-1);
+        WindowsVoice.speak(MainController.ErrorLogs[currentSelected].value);
+        WindowsVoice.speak(MainController.ErrorLogs[currentSelected].type.ToString());
     }
     public override void generalButton()
     {
-        Debug.LogError("C");
-        //Debug.Log(Selection.activeContext.name);
+        // Debug Current
+        WindowsVoice.speak(MainController.ErrorLogs[currentSelected].value);
+        WindowsVoice.speak(MainController.ErrorLogs[currentSelected].type.ToString());
 
-        return;
     }
     public override void infoButton()
     {
-        Debug.Log(MainController.test.Count);
-        //WindowsVoice.speak(TextHolder.ConsoleInfo);
+        WindowsVoice.speak(TextHolder.ConsoleInfo);
     }
     public override void Update()
     {
@@ -65,28 +75,89 @@ public class ConsoleTabController : TabController
     {
         /* Información necesaria:
          * Explicar todos los shortcuts de este modo, como por ejemplo abrir el editor de prefabs si un objeto es prefab
-         * * Contar cuantos errores, warnings y logs hay ______ General Button
-         * * Leer el último log hecho _________________________ Button A 
-         * * Decir el tipo de último log ______________________ Button B
+         * * Leer el actual ----------------------------------- General Button
+         * * Contar cuantos errores, warnings y logs hay ______ Button A
          * */
-       
+        
+
+
     }
     public override void buttonB()
     {
-        return;
+        
     }
     public override void buttonC()
     {
-        return;
+        selectionType = (typeOfSelection)(((int)selectionType + 1) % (int)typeOfSelection.Count);
+        switch (selectionType)
+        {
+            case typeOfSelection.OnlyErrors:
+                WindowsVoice.speak(TextHolder.OnlyErrors);
+                break;
+            case typeOfSelection.OnlyWarnings:
+                WindowsVoice.speak(TextHolder.OnlyWarnings);
+                break;
+            case typeOfSelection.OnlyLogs:
+                WindowsVoice.speak(TextHolder.OnlyLogs);
+                break;
+            case typeOfSelection.OnlyExceptions:
+                WindowsVoice.speak(TextHolder.OnlyExceptions);
+                break;
+            case typeOfSelection.OnlyAsserts:
+                WindowsVoice.speak(TextHolder.OnlyAsserts);
+                break;
+            case typeOfSelection.All:
+                WindowsVoice.speak(TextHolder.All);
+                break;
+            default:
+                break;
+        }
+        SelectNext(-1);
     }
 
-   
+    public void SelectNext(int x)
+    {
+        int prevCurrentSelected = currentSelected;
+        currentSelected = (currentSelected + x) % (MainController.ErrorLogs.Count - 1);
+        LogType type = LogType.Log;
+        switch (selectionType)
+        {
+            case typeOfSelection.OnlyErrors:
+                type = LogType.Error;
+                break;
+            case typeOfSelection.OnlyWarnings:
+                type = LogType.Warning;
+                break;
+            case typeOfSelection.OnlyLogs:
+                type = LogType.Log;
+                break;
+            case typeOfSelection.OnlyExceptions:
+                type = LogType.Exception;
+                break;
+            case typeOfSelection.OnlyAsserts:
+                type = LogType.Assert;
+                break;
+            default:
+                break;
+        }
+
+        if (selectionType != typeOfSelection.All)
+        {
+            while (prevCurrentSelected != currentSelected && MainController.ErrorLogs[currentSelected].type != type)
+            {
+                currentSelected += x;
+                if (currentSelected < 0)
+                    currentSelected = MainController.ErrorLogs.Count - 1;
+                currentSelected %= (MainController.ErrorLogs.Count);
+            }
+        }
+    }
     public override void clean()
     {
-        System.Reflection.FieldInfo info = typeof(EditorApplication)
-            .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-        EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
-        value -= eventHandle;
-        return;
+        
+    }
+    public void getErrorLocation()
+    {
+        // Get script, function and line
     }
 }

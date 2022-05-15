@@ -38,10 +38,16 @@ static class TextHolder
     public const string IsADLL = "DLL";
     public const string UnknownItem = "Desconocido";
 
+    // Console 
+    public const string OnlyErrors = "Solo errores";
+    public const string OnlyWarnings = "Solo advertencias";
+    public const string OnlyLogs = "Solo logs";
+    public const string OnlyExceptions = "Solo excepciones";
+    public const string OnlyAsserts = "Solo asserts";
+    public const string All = "Todos";
 
 
-
-    //Info
+//Info
     public const string HierarchyInfo = "Con el botón general puedes saber que objeto está seleccionado, si tiene padre y cuantos hijos. " +
         "Usa el botón de avance para oir el número de hijos que tiene y enumerarlos" +
         "Usa el botón de retroceso para oir el nombre del objeto padre en caso de tenerlo" +

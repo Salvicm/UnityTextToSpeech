@@ -16,12 +16,11 @@ class MainController
     static EditorWindow previousWindow, currentWindow;
     static string nameOfCurrentWindow = "";
     static bool started = false;
-    public static List<KeyValuePair<string, LogType>> test;
-    public static int warningCount = 0;
-    public static int errorCount = 0;
+    public static List<CustomDebug> ErrorLogs;
+
+    public static int maxNumOfLogs = 1000;
     public static int logCount = 0;
-    public static int exceptionCount = 0;
-    public static int assertCount = 0;
+   
     static MainController()
     {
         nameOfCurrentWindow = SessionState.GetString("LastOpenWindows", "");
@@ -41,8 +40,12 @@ class MainController
         //    .Where(type => type.IsClass && !type.IsAbstract &&
         //    type.IsSubclassOf(typeof(EditorWindow))).ToArray();
         currentTabController = new HierarchyTabController();
-        test = new List<KeyValuePair<string, LogType>>();
-        //Application.logMessageReceived += HandleLog;
+
+        ErrorLogs = new List<CustomDebug>();
+        
+
+
+        Application.logMessageReceived += HandleLog;
 
         if (SessionState.GetBool("CanSpeak", true) == false)
         {
@@ -245,26 +248,15 @@ class MainController
 
     static void HandleLog(string logString, string stackTrace, LogType type)
     {
-        test.Add(new KeyValuePair<string, LogType>(logString, type));
-        switch (type)
+        if(ErrorLogs.Count == 0)
         {
-            case LogType.Error:
-                errorCount++;
-                break;
-            case LogType.Assert:
-                assertCount++;
-                break;
-            case LogType.Warning:
-                warningCount++; 
-                break;
-            case LogType.Log:
-                logCount++;
-                break;
-            case LogType.Exception:
-                exceptionCount++;
-                break;
-            default:
-                break;
+            ErrorLogs.Add(new CustomDebug(logString, stackTrace, type));
+        }
+        else if (stackTrace != ErrorLogs.ElementAt(ErrorLogs.Count-1).stacktrace)
+        {
+            ErrorLogs.Add(new CustomDebug(logString, stackTrace, type));
+            if (ErrorLogs.Count > maxNumOfLogs)
+                ErrorLogs.RemoveAt(0);
         }
     }
 
@@ -355,4 +347,18 @@ class MainController
 
 }
 
+
+public class CustomDebug
+{
+    public string value;
+    public string stacktrace;
+    public LogType type;
+    public CustomDebug(string _value, string _stacktrace, LogType _type)
+    {
+        value = _value;
+        stacktrace = _stacktrace;
+        type = _type;
+    }
+
+}
 #endif
