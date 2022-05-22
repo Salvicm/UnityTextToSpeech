@@ -33,9 +33,6 @@ public class ConsoleTabController : TabController
     }
     public override void init()
     {
-        Debug.Log("A");
-        Debug.LogError("B");
-        Debug.LogWarning("C");
         currentSelected = MainController.ErrorLogs.Count > 0 ? MainController.ErrorLogs.Count - 1 : 0;
         return;
     }

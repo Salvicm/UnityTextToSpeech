@@ -81,12 +81,12 @@ static class TextHolder
         "Usa el botón Auxiliar 1 para <no implementado>." +
         "Usa el botón Auxiliar 2 para <no implementado>." +
         "Usa el botón auxiliar 3 para <no implementado>.";
-    public const string ConsoleInfo = "Con el botón general puedes <no implementado>." +
-        "Usa el botón de avance para <no implementado>" +
-        "Usa el botón de retroceso para <no implementado>" +
-        "Usa el botón Auxiliar 1 para <no implementado>." +
-        "Usa el botón Auxiliar 2 para <no implementado>." +
-        "Usa el botón auxiliar 3 para <no implementado>.";
+    public const string ConsoleInfo = "Con el botón general puedes saber el log actual, lo que dice y el tipo." +
+        "Usa el botón de avance para avanzar al siguiente Log" +
+        "Usa el botón de retroceso para retroceder al log anterior" +
+        "Usa el botón Auxiliar 1 para escuchar el path del log actual." +
+        "Usa el botón Auxiliar 2 para escuchar el stacktrace completo." +
+        "Usa el botón auxiliar 3 para modificar el tipo de logs que quieres revisar.";
     public const string SceneInfo = "Con el botón general puedes <no implementado>." +
         "Usa el botón de avance para <no implementado>" +
         "Usa el botón de retroceso para <no implementado>" +
