@@ -33,37 +33,43 @@ public class ConsoleTabController : TabController
     }
     public override void init()
     {
-        //Debug.Log("A");
-        //Debug.LogWarning("E");
-        //Debug.LogError("O");
-        currentSelected = MainController.ErrorLogs.Count - 1;
+        Debug.Log("A");
+        Debug.LogError("B");
+        Debug.LogWarning("C");
+        currentSelected = MainController.ErrorLogs.Count > 0 ? MainController.ErrorLogs.Count - 1 : 0;
         return;
     }
  
     public override void advanceButton()
     {
+        if (MainController.ErrorLogs.Count == 0) return;
         SelectNext(1);
+        WindowsVoice.silence();
         WindowsVoice.speak(MainController.ErrorLogs[currentSelected].value);
         WindowsVoice.speak(MainController.ErrorLogs[currentSelected].type.ToString());
     }
     public override void regressionButton()
     {
-
+        if (MainController.ErrorLogs.Count == 0) return;
         SelectNext(-1);
+        WindowsVoice.silence();
         WindowsVoice.speak(MainController.ErrorLogs[currentSelected].value);
         WindowsVoice.speak(MainController.ErrorLogs[currentSelected].type.ToString());
     }
     public override void generalButton()
     {
+        if (MainController.ErrorLogs.Count == 0) return;
         // Debug Current
+        WindowsVoice.silence();
+        WindowsVoice.speak(TextHolder.ErrorNumber + (currentSelected + 1).ToString() + TextHolder.Of + MainController.ErrorLogs.Count.ToString());
         WindowsVoice.speak(MainController.ErrorLogs[currentSelected].value);
         WindowsVoice.speak(MainController.ErrorLogs[currentSelected].type.ToString());
 
     }
     public override void infoButton()
     {
-        WindowsVoice.testFunct();
-        //WindowsVoice.speak(TextHolder.ConsoleInfo);
+        WindowsVoice.silence();
+        WindowsVoice.speak(TextHolder.ConsoleInfo);
     }
     public override void Update()
     {
@@ -74,11 +80,15 @@ public class ConsoleTabController : TabController
     }
     public override void buttonA()
     {
+        if (MainController.ErrorLogs.Count == 0) return;
+        WindowsVoice.silence();
         WindowsVoice.speak(MainController.ErrorLogs[currentSelected].fullPath);
     }
     public override void buttonB()
     {
         // Read full callback
+        if (MainController.ErrorLogs.Count == 0) return;
+        WindowsVoice.silence();
         WindowsVoice.speak(TextHolder.readingAll);
 
 
@@ -90,7 +100,9 @@ public class ConsoleTabController : TabController
     }
     public override void buttonC()
     {
+
         selectionType = (typeOfSelection)(((int)selectionType + 1) % (int)typeOfSelection.Count);
+        WindowsVoice.silence();
         switch (selectionType)
         {
             case typeOfSelection.OnlyErrors:
@@ -119,8 +131,13 @@ public class ConsoleTabController : TabController
 
     public void SelectNext(int x)
     {
+
+        if (MainController.ErrorLogs.Count == 0 || MainController.ErrorLogs.Count == 1) return;
         int prevCurrentSelected = currentSelected;
-        currentSelected = (currentSelected + x) % (MainController.ErrorLogs.Count - 1);
+        currentSelected = (currentSelected + x);
+        if (currentSelected < 0)
+            currentSelected += MainController.ErrorLogs.Count;
+        currentSelected %= (MainController.ErrorLogs.Count);
         LogType type = LogType.Log;
         switch (selectionType)
         {
@@ -147,9 +164,9 @@ public class ConsoleTabController : TabController
         {
             while (prevCurrentSelected != currentSelected && MainController.ErrorLogs[currentSelected].type != type)
             {
-                currentSelected += x;
                 if (currentSelected < 0)
-                    currentSelected = MainController.ErrorLogs.Count - 1;
+                    currentSelected += MainController.ErrorLogs.Count;
+                currentSelected += x;
                 currentSelected %= (MainController.ErrorLogs.Count);
             }
         }

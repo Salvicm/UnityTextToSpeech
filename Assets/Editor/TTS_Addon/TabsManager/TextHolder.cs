@@ -48,7 +48,9 @@ static class TextHolder
     public const string All = "Todos";
 
     public const string readingAll = "Leyendo el stacktrace completo: ";
-    
+    public const string ErrorNumber = "Error número ";
+    public const string Of = " de ";
+
     [MenuItem("TTS/test %&J")]
     static void LoadTTS()
     {
@@ -96,5 +98,6 @@ static class TextHolder
 
     public const string profileID = "TTSSC";
 
+    
 }
 #endif

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine.UI;
+using System;
 
 [InitializeOnLoad]
 public static class WindowsVoice {
@@ -57,5 +58,10 @@ public static class WindowsVoice {
     public static void testFunct()
     {
         Debug.Log("this is a test");
+    }
+
+    internal static void speak(object p)
+    {
+        throw new NotImplementedException();
     }
 }
