@@ -1,5 +1,6 @@
 #if (UNITY_EDITOR) 
 using System.Collections;
+using UnityEditor;
 
 static class TextHolder
 {
@@ -46,8 +47,14 @@ static class TextHolder
     public const string OnlyAsserts = "Solo asserts";
     public const string All = "Todos";
 
-
-//Info
+    public const string readingAll = "Leyendo el stacktrace completo: ";
+    
+    [MenuItem("TTS/test %&J")]
+    static void LoadTTS()
+    {
+        char t = "a"[2];
+    }
+    //Info
     public const string HierarchyInfo = "Con el botón general puedes saber que objeto está seleccionado, si tiene padre y cuantos hijos. " +
         "Usa el botón de avance para oir el número de hijos que tiene y enumerarlos" +
         "Usa el botón de retroceso para oir el nombre del objeto padre en caso de tenerlo" +

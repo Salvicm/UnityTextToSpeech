@@ -54,4 +54,8 @@ public static class WindowsVoice {
       statusMessage(sb, 40);
       return sb.ToString();
     }
+    public static void testFunct()
+    {
+        Debug.Log("this is a test");
+    }
 }

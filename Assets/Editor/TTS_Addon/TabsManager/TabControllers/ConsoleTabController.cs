@@ -10,8 +10,8 @@ using UnityEditor.UIElements;
 public class ConsoleTabController : TabController
 {
     
-    public enum typeOfSelection {OnlyErrors, OnlyWarnings, OnlyLogs, OnlyExceptions, OnlyAsserts, All, Count }
-    public typeOfSelection selectionType = typeOfSelection.OnlyErrors;
+    public enum typeOfSelection { All, OnlyErrors, OnlyWarnings, OnlyLogs, OnlyExceptions, OnlyAsserts, Count }
+    public typeOfSelection selectionType = typeOfSelection.All;
     public int currentSelected = 0;
 
     /*
@@ -33,9 +33,9 @@ public class ConsoleTabController : TabController
     }
     public override void init()
     {
-        Debug.Log("A");
-        Debug.LogWarning("E");
-        Debug.LogError("O");
+        //Debug.Log("A");
+        //Debug.LogWarning("E");
+        //Debug.LogError("O");
         currentSelected = MainController.ErrorLogs.Count - 1;
         return;
     }
@@ -62,7 +62,8 @@ public class ConsoleTabController : TabController
     }
     public override void infoButton()
     {
-        WindowsVoice.speak(TextHolder.ConsoleInfo);
+        WindowsVoice.testFunct();
+        //WindowsVoice.speak(TextHolder.ConsoleInfo);
     }
     public override void Update()
     {
@@ -73,17 +74,18 @@ public class ConsoleTabController : TabController
     }
     public override void buttonA()
     {
-        /* Información necesaria:
-         * Explicar todos los shortcuts de este modo, como por ejemplo abrir el editor de prefabs si un objeto es prefab
-         * * Leer el actual ----------------------------------- General Button
-         * * Contar cuantos errores, warnings y logs hay ______ Button A
-         * */
-        
-
-
+        WindowsVoice.speak(MainController.ErrorLogs[currentSelected].fullPath);
     }
     public override void buttonB()
     {
+        // Read full callback
+        WindowsVoice.speak(TextHolder.readingAll);
+
+
+        for (int i = 1; i < MainController.ErrorLogs[currentSelected].logPath.Length - 1; i++)
+        {
+            WindowsVoice.speak(MainController.ErrorLogs[currentSelected].logPath[i]);
+        }
         
     }
     public override void buttonC()
@@ -156,8 +158,5 @@ public class ConsoleTabController : TabController
     {
         
     }
-    public void getErrorLocation()
-    {
-        // Get script, function and line
-    }
+
 }

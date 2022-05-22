@@ -27,18 +27,7 @@ class MainController
 
         EditorApplication.update += Update;
 
-        /* // Key presses
-         System.Reflection.FieldInfo info = typeof(EditorApplication)
-             .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-         EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
-         value += EditorGlobalKeyPress;
-
-         info.SetValue(null, value);
-        */
-        //var types = AppDomain.CurrentDomain.GetAssemblies()
-        //    .SelectMany(assembly => assembly.GetTypes())
-        //    .Where(type => type.IsClass && !type.IsAbstract &&
-        //    type.IsSubclassOf(typeof(EditorWindow))).ToArray();
+    
         currentTabController = new HierarchyTabController();
 
         ErrorLogs = new List<CustomDebug>();
@@ -54,9 +43,6 @@ class MainController
         
         if (EditorPrefs.GetBool("FirstInitDone", false) == false)
         {
-            //Force rebind
-            // TEst
-            
             KeyCombination keyCombination = new KeyCombination(KeyCode.O);
             ShortcutBinding binding = new ShortcutBinding(keyCombination);
             bool alreadyExists = false;
@@ -167,7 +153,7 @@ class MainController
 
                     break;
             }
- 
+
             
             currentTabController.init();
 
@@ -334,14 +320,6 @@ class MainController
         WindowsVoice.silence();
     }
 
-    //No parece poder hacerse
-    //[MenuItem("TTS/Helper/CustomClosePrefab _o")]
-    //static void closePrefab()
-    //{
-
-    //    EditorApplication.ExecuteMenuItem("Stage/Go back");
-    //    Debug.Log("A");
-    //}
 
     #endregion
 
@@ -353,11 +331,23 @@ public class CustomDebug
     public string value;
     public string stacktrace;
     public LogType type;
+    public string[] logPath;
+    public string fullPath;
+    public int numberLine;
     public CustomDebug(string _value, string _stacktrace, LogType _type)
     {
         value = _value;
         stacktrace = _stacktrace;
         type = _type;
+        logPath = stacktrace.Split('\n');
+        int textStart = stacktrace.IndexOf("(at ");
+        int textEnd = stacktrace.IndexOf(')', textStart + 4);
+        if (!(textStart < 0 || textEnd < 0))
+        {
+            fullPath = stacktrace.Substring(textStart + 4, textEnd - textStart - 4);
+        }
+        Int32.TryParse(fullPath.Split(':')[1],out numberLine);
+        fullPath = fullPath.Split(':')[0];
     }
 
 }
