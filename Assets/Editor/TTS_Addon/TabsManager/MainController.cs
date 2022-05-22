@@ -16,51 +16,53 @@ class MainController
     static EditorWindow previousWindow, currentWindow;
     static string nameOfCurrentWindow = "";
     static bool started = false;
+    public static List<CustomDebug> ErrorLogs;
+
+    public static int maxNumOfLogs = 1000;
+    public static int logCount = 0;
+   
     static MainController()
     {
         nameOfCurrentWindow = SessionState.GetString("LastOpenWindows", "");
 
         EditorApplication.update += Update;
 
-        /* // Key presses
-         System.Reflection.FieldInfo info = typeof(EditorApplication)
-             .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-         EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
-         value += EditorGlobalKeyPress;
-
-         info.SetValue(null, value);
-        */
-        //var types = AppDomain.CurrentDomain.GetAssemblies()
-        //    .SelectMany(assembly => assembly.GetTypes())
-        //    .Where(type => type.IsClass && !type.IsAbstract &&
-        //    type.IsSubclassOf(typeof(EditorWindow))).ToArray();
+    
         currentTabController = new HierarchyTabController();
 
-        if (!SessionState.GetBool("CanSpeak", true))
+        ErrorLogs = new List<CustomDebug>();
+        
+
+
+        Application.logMessageReceived += HandleLog;
+
+        if (SessionState.GetBool("CanSpeak", true) == false)
         {
             WindowsVoice.destroySpeech();
         }
-        if (!SessionState.GetBool("FirstInitDone", false))
+        
+        if (EditorPrefs.GetBool("FirstInitDone", false) == false)
         {
-           
-            //Force rebind
             KeyCombination keyCombination = new KeyCombination(KeyCode.O);
             ShortcutBinding binding = new ShortcutBinding(keyCombination);
+            bool alreadyExists = false;
+            foreach(string item in ShortcutManager.instance.GetAvailableProfileIds())
+            {
+                Debug.Log(item);
+                if(item == TextHolder.profileID)
+                    alreadyExists = true;
+            }
+            if(!alreadyExists)
+                ShortcutManager.instance.CreateProfile(TextHolder.profileID);
+            ShortcutManager.instance.activeProfileId = TextHolder.profileID;
             ShortcutManager.instance.RebindShortcut("Stage/Go Back", binding);
 
             WindowsVoice.speak(TextHolder.InitializingTTS);
-            SessionState.SetBool("FirstInitDone", true);
+            EditorPrefs.SetBool("FirstInitDone", true);
         }
     }
 
-    static void EditorGlobalKeyPress()
-    {
-        Event current = Event.current;
 
-                
-        if ((!current.alt && !current.control)|| current.type != EventType.KeyUp) return;
-        
-    }
     
     static void Update()
     {
@@ -125,7 +127,7 @@ class MainController
                case Windows.ConsoleWindow:
                     if (currentTabController.GetType() != typeof(ConsoleTabController))
                     {
-                        // currentTabController = new ConsoleTabController();
+                        currentTabController = new ConsoleTabController();
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenConsole);
@@ -139,7 +141,7 @@ class MainController
                         WindowsVoice.speak(TextHolder.OpenInspector);
                     break;
                 case Windows.ProjectBrowser:
-                    if (currentTabController.GetType() != typeof(InspectorTabController))
+                    if (currentTabController.GetType() != typeof(ProjectTabController))
                     {
                         currentTabController = new ProjectTabController();
                     }
@@ -151,7 +153,7 @@ class MainController
 
                     break;
             }
- 
+
             
             currentTabController.init();
 
@@ -230,6 +232,19 @@ class MainController
         }
     }
 
+    static void HandleLog(string logString, string stackTrace, LogType type)
+    {
+        if(ErrorLogs.Count == 0)
+        {
+            ErrorLogs.Add(new CustomDebug(logString, stackTrace, type));
+        }
+        else if (stackTrace != ErrorLogs.ElementAt(ErrorLogs.Count-1).stacktrace)
+        {
+            ErrorLogs.Add(new CustomDebug(logString, stackTrace, type));
+            if (ErrorLogs.Count > maxNumOfLogs)
+                ErrorLogs.RemoveAt(0);
+        }
+    }
 
 
     #region MenuItems
@@ -305,17 +320,35 @@ class MainController
         WindowsVoice.silence();
     }
 
-    //No parece poder hacerse
-    //[MenuItem("TTS/Helper/CustomClosePrefab _o")]
-    //static void closePrefab()
-    //{
-
-    //    EditorApplication.ExecuteMenuItem("Stage/Go back");
-    //    Debug.Log("A");
-    //}
 
     #endregion
 
 }
 
+
+public class CustomDebug
+{
+    public string value;
+    public string stacktrace;
+    public LogType type;
+    public string[] logPath;
+    public string fullPath;
+    public int numberLine;
+    public CustomDebug(string _value, string _stacktrace, LogType _type)
+    {
+        value = _value;
+        stacktrace = _stacktrace;
+        type = _type;
+        logPath = stacktrace.Split('\n');
+        int textStart = stacktrace.IndexOf("(at ");
+        int textEnd = stacktrace.IndexOf(')', textStart + 4);
+        if (!(textStart < 0 || textEnd < 0))
+        {
+            fullPath = stacktrace.Substring(textStart + 4, textEnd - textStart - 4);
+        }
+        Int32.TryParse(fullPath.Split(':')[1],out numberLine);
+        fullPath = fullPath.Split(':')[0];
+    }
+
+}
 #endif
