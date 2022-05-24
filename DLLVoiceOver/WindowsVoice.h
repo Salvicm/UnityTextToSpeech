@@ -16,6 +16,7 @@ namespace WindowsVoice {
     DLL_API void __cdecl destroySpeech();
     DLL_API void __cdecl statusMessage(char* msg, int msgLen);
     DLL_API void __cdecl silenceQueue();
+    DLL_API int __cdecl getLanguage();
   }
 
   std::mutex theMutex;

@@ -1,4 +1,8 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(496,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
   dllmain.cpp
-C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\dllmain.cpp(129,33): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
-  WindowsVoice.vcxproj -> C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\libs\WindowsVoice.dll
+C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\WindowsVoice.h(19,46): warning C4190: 'getLanguage' tiene una vinculación C especificada, pero devuelve el tipo definido por el usuario 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' que es incompatible con C
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\include\xstring(4920): message : vea la declaración de 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\dllmain.cpp(55,69): error C2664: 'HRESULT ISpDataKey::GetStringValue(LPCWSTR,LPWSTR *)': el argumento 2 no puede convertirse de 'std::string *' a 'LPWSTR *'
+C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\dllmain.cpp(55,56): message : Los tipos señalados no están relacionados; la conversión requiere reinterpret_cast, conversión de estilo de C o conversión de estilo de función
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\sapi.h(1763,43): message : vea la declaración de 'ISpDataKey::GetStringValue'
+C:\Users\salvi\Documents\Cosas Programacion\TFG\DLLVoiceOver\dllmain.cpp(124,33): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos

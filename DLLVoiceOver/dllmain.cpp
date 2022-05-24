@@ -3,10 +3,14 @@
 #include "WindowsVoice.h"
 
 #include <sapi.h>
-//#include <iostream>
 
+#include <atlbase.h>
+#pragma warning(disable:4996) 
+#include <sphelper.h>
+#pragma warning(default: 4996)
 namespace WindowsVoice {
 
+    CSpDynamicString selectedLang;
   void speechThreadFunc()
   {
     ISpVoice * pVoice = NULL;
@@ -17,7 +21,16 @@ namespace WindowsVoice {
       return;
     }
 
+
     HRESULT hr = CoCreateInstance(CLSID_SpVoice, NULL, CLSCTX_ALL, IID_ISpVoice, (void **)&pVoice);
+    /// <summary>
+    /// Voices
+    /// </summary>
+    CComPtr<ISpObjectToken>        cpVoiceToken;
+    CComPtr<IEnumSpObjectTokens>   cpEnum;
+    CComPtr<ISpVoice>              cpVoice;
+    ULONG                          ulCount = 0;
+
     if (!SUCCEEDED(hr))
     {
       LPSTR pText = 0;
@@ -29,40 +42,21 @@ namespace WindowsVoice {
       return;
     }
     theStatusMessage = L"Speech ready.";
-/*
-    //std::cout << "Speech ready.\n";
-    wchar_t* priorText = nullptr;
-    while (!shouldTerminate)
+    
+    ISpObjectToken* cpToken(NULL);
+   
+    SpFindBestToken(SPCAT_VOICES, L"language=409;gender=female", L"", &cpToken);
+    CComPtr<ISpDataKey> cpSpAttributesKey;
+
+    if (SUCCEEDED(hr = cpToken->OpenKey(L"Attributes", &cpSpAttributesKey)))
     {
-      wchar_t* wText = NULL;
-      if (!theSpeechQueue.empty())
-      {
-        theMutex.lock();
-        wText = theSpeechQueue.front();
-        theSpeechQueue.pop_front();
-        theMutex.unlock();
-      }
-      if (wText)
-      {
-        if (priorText == nullptr || lstrcmpW(wText, priorText) != 0)
-        {
-          pVoice->Speak(wText, SPF_IS_XML, NULL);
-          Sleep(250);
-          delete[] priorText;
-          priorText = wText;
-        }
-        else
-          delete[] wText;
-      }
-      else
-      {
-        delete[] priorText;
-        priorText = nullptr;
-        Sleep(50);
-      }
+        cpSpAttributesKey->GetStringValue(L"language", &selectedLang);
+        
     }
-    pVoice->Release();
-*/
+    pVoice->SetVoice(cpToken);
+    cpToken->Release();
+
+
     SPVOICESTATUS voiceStatus;
     wchar_t* priorText = nullptr;
     while (!shouldTerminate)
@@ -153,6 +147,8 @@ namespace WindowsVoice {
     }
     theStatusMessage = L"Starting Windows Voice.";
     theSpeechThread = new std::thread(WindowsVoice::speechThreadFunc);
+
+    addToSpeechQueue(selectedLang);
   }
   void destroySpeech()
   {
@@ -182,6 +178,9 @@ namespace WindowsVoice {
           stopText = true;
           theMutex.unlock();
       }
+  }
+  int getLanguage() {
+      return selectedLang;
   }
 }
 

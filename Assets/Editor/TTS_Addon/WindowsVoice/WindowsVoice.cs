@@ -14,6 +14,7 @@ public static class WindowsVoice {
     [DllImport("WindowsVoice")] public static extern void clearSpeechQueue();
     [DllImport("WindowsVoice")] public static extern void statusMessage(StringBuilder str, int length);
     [DllImport("WindowsVoice")] public static extern void silenceQueue();
+    [DllImport("WindowsVoice")] public static extern string getLanguage();
 
     private static readonly Destructor Finalise = new Destructor();
 
@@ -38,10 +39,11 @@ public static class WindowsVoice {
         }
         if (delay == 0f)
         {
-            if(Application.systemLanguage == SystemLanguage.English)
+            /*if(Application.systemLanguage == SystemLanguage.English)
                 addToSpeechQueue("<VOICE REQUIRED=\"language=409\">" + msg + "</VOICE>");
-            else
+            else*/
                 addToSpeechQueue(msg);
+        
         }
         
     }
@@ -58,9 +60,11 @@ public static class WindowsVoice {
       statusMessage(sb, 40);
       return sb.ToString();
     }
+    [MenuItem("TTS/AAAAAAAAAAAAA %&Ñ")]
+
     public static void testFunct()
     {
-        Debug.Log("this is a test");
+        Debug.Log(getLanguage());
     }
 
     internal static void speak(object p)

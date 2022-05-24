@@ -12,6 +12,9 @@ using UnityEditor.ShortcutManagement;
 [InitializeOnLoad]
 class MainController
 {
+
+    public enum Languages { English, spanish, def }
+    static Languages languages;
     static TabController currentTabController;
     static EditorWindow previousWindow, currentWindow;
     static string nameOfCurrentWindow = "";
@@ -23,6 +26,8 @@ class MainController
    
     static MainController()
     {
+
+        if(Application.systemLanguage == SystemLanguage.English)
         nameOfCurrentWindow = SessionState.GetString("LastOpenWindows", "");
 
         EditorApplication.update += Update;
