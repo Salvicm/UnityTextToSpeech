@@ -1,56 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 public class InspectorTabController : TabController
 {
-    public override void advanceButton()
-    {
-        throw new System.NotImplementedException();
-    }
 
-    public override void buttonA()
+    public InspectorTabController()
     {
-        throw new System.NotImplementedException();
+        
     }
-
-    public override void buttonB()
+    ~InspectorTabController()
     {
-        throw new System.NotImplementedException();
-    }
 
-    public override void buttonC()
+    }
+    public override void init()
     {
-        throw new System.NotImplementedException();
-    }
+        //System.Reflection.FieldInfo info = typeof(EditorApplication)
+        //      .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+        //EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
+        //value += eventHandle;
 
-    public override void clean()
+    }
+    public void eventHandle()
     {
-        throw new System.NotImplementedException();
+        
     }
-
+    public override void Update()
+    {
+    }
     public override void generalButton()
     {
-        throw new System.NotImplementedException();
+        if (Selection.activeGameObject == null) return;
+        WindowsVoice.speak(Selection.activeGameObject.name);
     }
 
     public override void infoButton()
     {
-        throw new System.NotImplementedException();
+        WindowsVoice.speak(TextHolder.InspectorInfo);
     }
-
-    public override void init()
+    public override void advanceButton()
     {
-        throw new System.NotImplementedException();
     }
-
     public override void regressionButton()
     {
-        throw new System.NotImplementedException();
     }
 
-    public override void Update()
+    public override void buttonA()
     {
-        throw new System.NotImplementedException();
     }
+
+    public override void buttonB()
+    {
+    }
+
+    public override void buttonC()
+    {
+    }
+
+    public override void clean()
+    {
+        //System.Reflection.FieldInfo info = typeof(EditorApplication)
+        //     .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+        //EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
+        //value -= eventHandle;
+    }
+
+
 }

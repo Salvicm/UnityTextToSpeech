@@ -48,12 +48,31 @@ static class TextHolder
     public static string OnlyAsserts = "Only asserts";
     public static string All = "All";
        
-
     public static string readingAll = "Reading full stacktrace: ";
     public static string ErrorNumber = "Error number ";
     public static string Of = " of ";
 
+    // Inspector Window
+    public static string testInfo = "AAAA";
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #region Information
     //Info
     public static string HierarchyInfo = "With the general button you can know which object is selected, if it has a parent and how many children does it have. " +
         "Use advance button to hear the number of childs it has and enumerate them." +
@@ -69,20 +88,22 @@ static class TextHolder
         "Use auxiliar button 2 to know the folder of the current selected object." +
         "Use auxiliar button 3 to know if the object is a prefab.";
 
-    public static string InspectorInfo = "Unimplemented window";
-    public static string GameInfo = "Unimplemented window";
     public static string ConsoleInfo = "With the general button you can know the actual log, what it says and the type." +
         "Use advance button to advance to the next log." +
         "Use regress button to return to the previous log." +
         "Use auxiliar button 1 to hear actual log path." +
         "Use auxiliar button 2 to hear the full stacktrace." +
         "Use auxiliar button 3 to modify the type of logs to check'.";
+    public static string InspectorInfo = "Work in progress";
+
+
+    public static string GameInfo = "Unimplemented window";
     public static string SceneInfo = "Unimplemented window";
 
 
 
     public const string profileID = "TTSSC";
 
-    
+    #endregion
 }
 #endif

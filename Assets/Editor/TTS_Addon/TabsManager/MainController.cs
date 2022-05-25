@@ -135,7 +135,7 @@ class MainController
                case Windows.InspectorWindow:
                     if (currentTabController.GetType() != typeof(InspectorTabController))
                     {
-                        // currentTabController = new InspectorTabController();
+                        currentTabController = new InspectorTabController();
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenInspector);
@@ -336,6 +336,7 @@ public class CustomDebug
     public int numberLine;
     public CustomDebug(string _value, string _stacktrace, LogType _type)
     {
+        // Esto no funciona demasiado bien habria que testearlo mas
         value = _value;
         stacktrace = _stacktrace;
         type = _type;
@@ -349,6 +350,5 @@ public class CustomDebug
         Int32.TryParse(fullPath.Split(':')[1],out numberLine);
         fullPath = fullPath.Split(':')[0];
     }
-
 }
 #endif
