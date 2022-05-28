@@ -260,6 +260,11 @@ class MainController
     [MenuItem("TTS/disable %&U")]
     static void UnloadTTS()
     {
+        
+
+
+
+
         WindowsVoice.silence();
         WindowsVoice.destroySpeech();
         SessionState.SetBool("CanSpeak", false);
