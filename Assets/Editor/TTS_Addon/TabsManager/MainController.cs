@@ -327,29 +327,22 @@ public class CustomDebug
     public int numberLine;
     public CustomDebug(string _value, string _stacktrace, LogType _type)
     {
-        try
-        {
-
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
         value = _value;
         stacktrace = _stacktrace;
         type = _type;
         logPath = stacktrace.Split('\n');
         int textStart = stacktrace.IndexOf("(at");
-        if (textStart <= 0) return;
-        int textEnd = stacktrace.IndexOf(':', textStart);
 
-        if (!(textStart < 0 || textEnd < 0))
+        if (textStart > 0)
         {
-          fullPath = stacktrace.Substring(textStart + 3, textEnd - textStart);
+            int textEnd = stacktrace.IndexOf(':', textStart);
+            if (textEnd > 0)
+            {   
+                fullPath = stacktrace.Substring(textStart + 3, textEnd - textStart);
+                Int32.TryParse(fullPath.Split(':')[1],out numberLine);
+                fullPath = fullPath.Split(':')[0];
+            }
         }
-        Int32.TryParse(fullPath.Split(':')[1],out numberLine);
-        fullPath = fullPath.Split(':')[0];
     }
     
 }
