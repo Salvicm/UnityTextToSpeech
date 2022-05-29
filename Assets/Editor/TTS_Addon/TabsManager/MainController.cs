@@ -9,6 +9,10 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.ShortcutManagement;
 
+
+
+
+
 [InitializeOnLoad]
 class MainController
 {
@@ -221,7 +225,7 @@ class MainController
 
         }
     }
-
+    
     static void HandleLog(string logString, string stackTrace, LogType type)
     {
         if(ErrorLogs.Count == 0)
@@ -258,8 +262,8 @@ class MainController
     [MenuItem("TTS/AdvanceTab %&D")]
     static void SelectedTabAdvanceButton()//d
     {
+        WindowsVoice.speak(logCount.ToString());
         currentTabController.advanceButton();
-
     }
 
     [MenuItem("TTS/RegresTab %&A")]
@@ -272,41 +276,38 @@ class MainController
     static void SelectedTabGeneralButton()//x
     {
         currentTabController.generalButton();
-
     }
 
     [MenuItem("TTS/InfoButton %&C")]
     static void SelectedTabInfoButton()
     {
         currentTabController.infoButton();
-
     }
 
     [MenuItem("TTS/TabUtilA %&B")]
     static void SelectedTabButtonA()
     {
+        Debug.Log("AAAAAA");
         currentTabController.buttonA();
-
     }
 
     [MenuItem("TTS/TabUtilB %&N")]
     static void SelectedTabButtonB()
     {
+        Debug.Log("BBBBBBB");
         currentTabController.buttonB();
-
     }
 
     [MenuItem("TTS/TabUtilC %&M")]
     static void SelectedTabButtonC()
     {
+        Debug.Log("CCCCCCCC");
         currentTabController.buttonC();
-
     }
 
     [MenuItem("TTS/Helper/SilenceVoice %&K")]
     static void silence()
     {
-
         WindowsVoice.silence();
     }
 
@@ -326,19 +327,30 @@ public class CustomDebug
     public int numberLine;
     public CustomDebug(string _value, string _stacktrace, LogType _type)
     {
-        // Esto no funciona demasiado bien habria que testearlo mas
+        try
+        {
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
         value = _value;
         stacktrace = _stacktrace;
         type = _type;
         logPath = stacktrace.Split('\n');
-        int textStart = stacktrace.IndexOf("(at ");
-        int textEnd = stacktrace.IndexOf(')', textStart + 4);
+        int textStart = stacktrace.IndexOf("(at");
+        if (textStart <= 0) return;
+        int textEnd = stacktrace.IndexOf(':', textStart);
+
         if (!(textStart < 0 || textEnd < 0))
         {
-            fullPath = stacktrace.Substring(textStart + 4, textEnd - textStart - 4);
+          fullPath = stacktrace.Substring(textStart + 3, textEnd - textStart);
         }
         Int32.TryParse(fullPath.Split(':')[1],out numberLine);
         fullPath = fullPath.Split(':')[0];
     }
+    
 }
 #endif

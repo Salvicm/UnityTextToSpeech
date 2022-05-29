@@ -63,8 +63,4 @@ public static class WindowsVoice {
         Debug.Log("this is a test");
     }
 
-    internal static void speak(object p)
-    {
-        throw new NotImplementedException();
-    }
 }
