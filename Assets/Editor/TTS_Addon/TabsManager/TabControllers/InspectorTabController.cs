@@ -7,6 +7,8 @@ using UnityEditor.SceneManagement;
 public class InspectorTabController : TabController
 {
 
+    public static string prevSelectedLabel = "";
+    public static string currentValueAsString = "";
     public InspectorTabController()
     {
         
@@ -17,16 +19,8 @@ public class InspectorTabController : TabController
     }
     public override void init()
     {
-        //System.Reflection.FieldInfo info = typeof(EditorApplication)
-        //      .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-        //EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
-        //value += eventHandle;
+    }
 
-    }
-    public void eventHandle()
-    {
-        
-    }
     public override void Update()
     {
     }
@@ -34,6 +28,7 @@ public class InspectorTabController : TabController
     {
         if (Selection.activeGameObject == null) return;
         WindowsVoice.speak(Selection.activeGameObject.name);
+        
     }
 
     public override void infoButton()
@@ -42,29 +37,36 @@ public class InspectorTabController : TabController
     }
     public override void advanceButton()
     {
+        WindowsVoice.speak(TextHolder.thisDoesNothing);
+
     }
     public override void regressionButton()
     {
+        WindowsVoice.speak(TextHolder.thisDoesNothing);
+
     }
 
     public override void buttonA()
     {
+        WindowsVoice.speak(prevSelectedLabel);
+        WindowsVoice.speak(currentValueAsString);
     }
 
     public override void buttonB()
     {
+        WindowsVoice.speak(TextHolder.thisDoesNothing);
+
     }
 
     public override void buttonC()
     {
+        WindowsVoice.speak(TextHolder.thisDoesNothing);
+
     }
 
     public override void clean()
     {
-        //System.Reflection.FieldInfo info = typeof(EditorApplication)
-        //     .GetField("globalEventHandler", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-        //EditorApplication.CallbackFunction value = (EditorApplication.CallbackFunction)info.GetValue(null);
-        //value -= eventHandle;
+
     }
 
 

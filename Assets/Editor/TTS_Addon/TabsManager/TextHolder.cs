@@ -53,11 +53,7 @@ static class TextHolder
     public static string Of = " of ";
 
     // Inspector Window
-    public static string testInfo = "AAAA";
-
-
-
-
+    public static string thisDoesNothing = "This button does nothing";
 
 
 

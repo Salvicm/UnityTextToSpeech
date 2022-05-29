@@ -186,19 +186,9 @@ class MainController
     static void ShowEditorWindowWithTypeName(string windowTypeName)
     {
 
-        
-        var types = new List<Type>()
-        { 
-            // first add your preferences
-            typeof(SceneView),
-            typeof(Editor).Assembly.GetType("UnityEditor.GameView"),
-            typeof(Editor).Assembly.GetType("UnityEditor.SceneHierarchyWindow"),
-            typeof(Editor).Assembly.GetType("UnityEditor.ConsoleWindow"),
-            typeof(Editor).Assembly.GetType("UnityEditor.ProjectBrowser"),
-            typeof(Editor).Assembly.GetType("UnityEditor.InspectorWindow")
-        };
 
-   
+
+
         switch (windowTypeName)
         {
             case Windows.SceneHierarchyWindow:
@@ -260,11 +250,6 @@ class MainController
     [MenuItem("TTS/disable %&U")]
     static void UnloadTTS()
     {
-        
-
-
-
-
         WindowsVoice.silence();
         WindowsVoice.destroySpeech();
         SessionState.SetBool("CanSpeak", false);
