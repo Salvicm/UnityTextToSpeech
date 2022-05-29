@@ -48,7 +48,14 @@ public class TTSEditor_Transform : Editor
     }
     private void OnSceneGUI()
     {
-        rotationField.SetValueWithoutNotify(TransformUtils.GetInspectorRotation(transform));
+        try
+        {
+            rotationField.SetValueWithoutNotify(TransformUtils.GetInspectorRotation(transform));
+        }
+        catch (Exception)
+        {
+            // This is no error
+        }
     }
     private void OnFocusInEvent(FocusInEvent evt)
     {
