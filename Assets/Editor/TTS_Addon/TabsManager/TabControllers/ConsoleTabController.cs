@@ -14,15 +14,6 @@ public class ConsoleTabController : TabController
     public typeOfSelection selectionType = typeOfSelection.All;
     public int currentSelected = 0;
 
-    /*
-     * Tener una lista para todos los logs, con mayor capacidad de logs
-     * Inicializar el valor al máximo
-     * Al leer, switchear el tipo
-     * Hacer una iteración al ir sumando o bajando, hasta encontrar el siguiente del tipo preseleccionado
-     * Si no se encuentra, se mantiene el último seleccionado
-     * Al inicializarlo, comprobar si el stacktrace es igual al anterior
-     * 
-     */
 
     public ConsoleTabController()
     {
