@@ -53,10 +53,10 @@ public class TTSEditor_Transform : Editor
     private void OnFocusInEvent(FocusInEvent evt)
     {
         Vector3Field vector3Field = evt.target as Vector3Field;
+        InspectorTabController.currentValueAsString = "X = " +  vector3Field.value.x + ", Y = " + vector3Field.value.y + ", Z = " + vector3Field.value.z;
         if (vector3Field.label != InspectorTabController.prevSelectedLabel)
             InspectorTabController.prevSelectedLabel = vector3Field.label;
         else return;
-        InspectorTabController.currentValueAsString = "X = " +  vector3Field.value.x + ", Y = " + vector3Field.value.y + ", Z = " + vector3Field.value.z;
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
 }

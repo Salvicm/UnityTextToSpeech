@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
+
 [CanEditMultipleObjects, CustomEditor(typeof(Camera))]
 public class TTSEditor_Camera : Editor
 {
@@ -48,7 +49,7 @@ public class TTSEditor_Camera : Editor
 
     public SerializedProperty targetEye { get; private set; }
     #endregion
-    
+
     public override VisualElement CreateInspectorGUI()
     {
         VisualElement root = new VisualElement();
@@ -57,32 +58,32 @@ public class TTSEditor_Camera : Editor
         SerializedObject m_SerializedObject = new SerializedObject(camera);
 
         clearFlags = m_SerializedObject.FindProperty("m_ClearFlags");
-        PropertyField cFlags = new PropertyField(clearFlags);
+        PopupField<string> cFlags = new PopupField<string>(new List<string>() {  "Skybox", "Solid Color", "Depth Only", "Don't Clear" }, 0) ;
         cFlags.BindProperty(clearFlags);
         cFlags.label = "Clear Flags";
         root.Add(cFlags);
         cFlags.RegisterCallback<FocusInEvent>(OnFocusInEventDropdown);
 
         backgroundColor = m_SerializedObject.FindProperty("m_BackGroundColor");
-        PropertyField bColor = new PropertyField(backgroundColor);
+        ColorField bColor = new ColorField("backgroundColor");
         bColor.BindProperty(backgroundColor);
         bColor.label = "Background color";
         root.Add(bColor);
         bColor.RegisterCallback<FocusInEvent>(OnFocusInEventColor);
 
         cullingMask = m_SerializedObject.FindProperty("m_CullingMask");
-        PropertyField cMask = new PropertyField(cullingMask);
+        LayerField cMask = new LayerField("cullingMask", 0);
         cMask.BindProperty(cullingMask);
         cMask.label = "Culling Mask";
         root.Add(cMask);
-        cMask.RegisterCallback<FocusInEvent>(OnFocusInEventDropdown);
+        cMask.RegisterCallback<FocusInEvent>(OnFocusInEventLayer);
 
         projectionMatrixMode = m_SerializedObject.FindProperty("m_projectionMatrixMode");
-        PropertyField pMatrix = new PropertyField(projectionMatrixMode);
+        LayerField pMatrix = new LayerField("projectionMatrixMode", 0);
         pMatrix.BindProperty(projectionMatrixMode);
         pMatrix.label = "Projection Matrix Mode";
         root.Add(pMatrix);
-        pMatrix.RegisterCallback<FocusInEvent>(OnFocusInEventDropdown);
+        pMatrix.RegisterCallback<FocusInEvent>(OnFocusInEventLayer);
 
         sensorSize = m_SerializedObject.FindProperty("m_SensorSize");
         IntegerField sSize = new IntegerField("sensorSize");
@@ -92,39 +93,39 @@ public class TTSEditor_Camera : Editor
         sSize.RegisterCallback<FocusInEvent>(OnFocusInEventInteger);
 
         nearClippingPlane = m_SerializedObject.FindProperty("near clip plane");
-        PropertyField nClippin = new PropertyField(nearClippingPlane);
+        IntegerField nClippin = new IntegerField("nearClippingPlane");
         nClippin.BindProperty(nearClippingPlane);
         nClippin.label = "Near clipping plane";
         root.Add(nClippin);
         nClippin.RegisterCallback<FocusInEvent>(OnFocusInEventInteger);
 
         farClippingPlane = m_SerializedObject.FindProperty("far clip plane");
-        PropertyField fClippin = new PropertyField(farClippingPlane);
+        IntegerField fClippin = new IntegerField("farClippingPlane");
         fClippin.BindProperty(farClippingPlane);
         fClippin.label = "Far clipping plane";
         root.Add(fClippin);
         fClippin.RegisterCallback<FocusInEvent>(OnFocusInEventInteger);
 
         normalizedViewPortRect = m_SerializedObject.FindProperty("m_NormalizedViewPortRect");
-        PropertyField nViewPortRect = new PropertyField(normalizedViewPortRect);
+        Vector4Field nViewPortRect = new Vector4Field("normalizedViewPortRect");
         nViewPortRect.BindProperty(normalizedViewPortRect);
         nViewPortRect.label = "Normalized Viewport Rect";
         root.Add(nViewPortRect);
         nViewPortRect.RegisterCallback<FocusInEvent>(OnFocusInEventVector4);
 
         depth = m_SerializedObject.FindProperty("m_Depth");
-        PropertyField _depth = new PropertyField(depth);
+        IntegerField _depth = new IntegerField("depth");
         _depth.BindProperty(depth);
         _depth.label = "Depth";
         root.Add(_depth);
         _depth.RegisterCallback<FocusInEvent>(OnFocusInEventInteger);
 
         renderingPath = m_SerializedObject.FindProperty("m_RenderingPath");
-        PropertyField rPath = new PropertyField(renderingPath);
+        LayerField rPath = new LayerField("projectionMatrixMode", 0);
         rPath.BindProperty(renderingPath);
         rPath.label = "Rendering Path";
         root.Add(rPath);
-        rPath.RegisterCallback<FocusInEvent>(OnFocusInEventDropdown);
+        rPath.RegisterCallback<FocusInEvent>(OnFocusInEventLayer);
 
         targetTexture = m_SerializedObject.FindProperty("m_TargetTexture");
         PropertyField tTexture = new PropertyField(targetTexture);
@@ -134,28 +135,28 @@ public class TTSEditor_Camera : Editor
         tTexture.RegisterCallback<FocusInEvent>(OnFocusInEventObjectPicker);
 
         occlusionCulling = m_SerializedObject.FindProperty("m_OcclusionCulling");
-        PropertyField oCulling = new PropertyField(occlusionCulling);
+        Toggle oCulling = new Toggle("occlusionCulling");
         oCulling.BindProperty(occlusionCulling);
         oCulling.label = "Occlusion Culling";
         root.Add(oCulling);
         oCulling.RegisterCallback<FocusInEvent>(OnFocusInEventBool);
 
         HDR = m_SerializedObject.FindProperty("m_HDR");
-        PropertyField hdr = new PropertyField(HDR);
+        PopupField<string> hdr = new PopupField<string>("HDR");
         hdr.BindProperty(HDR);
         hdr.label = "HDR";
         root.Add(hdr);
         hdr.RegisterCallback<FocusInEvent>(OnFocusInEventDropdown);
 
         allowMSAA = m_SerializedObject.FindProperty("m_AllowMSAA");
-        PropertyField msaa = new PropertyField(allowMSAA);
+        PopupField<string> msaa = new PopupField<string>("allowMSAA");
         msaa.BindProperty(allowMSAA);
         msaa.label = "Allow MSAA";
         root.Add(msaa);
         msaa.RegisterCallback<FocusInEvent>(OnFocusInEventDropdown);
 
         allowDynamicResolution = m_SerializedObject.FindProperty("m_AllowDynamicResolution");
-        PropertyField aDynamicRes = new PropertyField(allowDynamicResolution);
+        Toggle aDynamicRes = new Toggle("allowDynamicResolution");
         aDynamicRes.BindProperty(allowDynamicResolution);
         aDynamicRes.label = "Allow Dynamic Resolution";
         root.Add(aDynamicRes);
@@ -169,7 +170,7 @@ public class TTSEditor_Camera : Editor
         tDisplay.RegisterCallback<FocusInEvent>(OnFocusInEventDropdown);
 
         targetEye = m_SerializedObject.FindProperty("m_TargetEye");
-        PropertyField tEye = new PropertyField(targetEye);
+        PopupField<string> tEye = new PopupField<string>("targetEye");
         tEye.BindProperty(targetEye);
         tEye.label = "Target Eye";
         root.Add(tEye);
@@ -204,58 +205,63 @@ public class TTSEditor_Camera : Editor
     private void OnFocusInEventInteger(FocusInEvent evt)
     {
         IntegerField field = evt.target as IntegerField;
+        InspectorTabController.currentValueAsString = field.value.ToString();
         if (field.label != InspectorTabController.prevSelectedLabel)
             InspectorTabController.prevSelectedLabel = field.label;
         else return;
-        //InspectorTabController.currentValueAsString = vector3Field.RegisterValueChangeCallback;
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
 
     private void OnFocusInEventBool(FocusInEvent evt)
     {
-        IntegerField field = evt.target as IntegerField;
+        Toggle field = evt.target as Toggle;
+        InspectorTabController.currentValueAsString = field.value.ToString();
         if (field.label != InspectorTabController.prevSelectedLabel)
             InspectorTabController.prevSelectedLabel = field.label;
         else return;
-        //InspectorTabController.currentValueAsString = vector3Field.RegisterValueChangeCallback;
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
 
     private void OnFocusInEventDropdown(FocusInEvent evt)
     {
-        IntegerField field = evt.target as IntegerField;
+        PopupField<string> field = evt.target as PopupField<string>;
+        InspectorTabController.currentValueAsString = field[0].ToString();
         if (field.label != InspectorTabController.prevSelectedLabel)
             InspectorTabController.prevSelectedLabel = field.label;
         else return;
-        //InspectorTabController.currentValueAsString = vector3Field.RegisterValueChangeCallback;
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
 
     private void OnFocusInEventVector4(FocusInEvent evt)
     {
-        IntegerField field = evt.target as IntegerField;
+        Vector4Field field = evt.target as Vector4Field;
+        InspectorTabController.currentValueAsString = "X = " + field.value.x + ", Y = " + field.value.y + ", Z = " + field.value.z + ", W = " + field.value.w;
         if (field.label != InspectorTabController.prevSelectedLabel)
             InspectorTabController.prevSelectedLabel = field.label;
         else return;
-        //InspectorTabController.currentValueAsString = vector3Field.RegisterValueChangeCallback;
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
     private void OnFocusInEventObjectPicker(FocusInEvent evt)
     {
-        IntegerField field = evt.target as IntegerField;
-        if (field.label != InspectorTabController.prevSelectedLabel)
-            InspectorTabController.prevSelectedLabel = field.label;
-        else return;
-        //InspectorTabController.currentValueAsString = vector3Field.RegisterValueChangeCallback;
-        WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
+        InspectorTabController.currentValueAsString = "Object Field not implemented";
     }
     private void OnFocusInEventColor(FocusInEvent evt)
     {
-        IntegerField field = evt.target as IntegerField;
+        ColorField field = evt.target as ColorField;
+        InspectorTabController.currentValueAsString = "Red = " + field.value.r * 255 + ", Green = " + field.value.g * 255 + ", Blue = " + field.value.b * 255 + ", Alpha = " + field.value.a * 255;
         if (field.label != InspectorTabController.prevSelectedLabel)
             InspectorTabController.prevSelectedLabel = field.label;
         else return;
-        //InspectorTabController.currentValueAsString = vector3Field.RegisterValueChangeCallback;
+        WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
+    }
+
+    private void OnFocusInEventLayer(FocusInEvent evt)
+    {
+        ColorField field = evt.target as ColorField;
+        InspectorTabController.currentValueAsString = "Red = " + field.value.r * 255 + ", Green = " + field.value.g * 255 + ", Blue = " + field.value.b * 255 + ", Alpha = " + field.value.a * 255;
+        if (field.label != InspectorTabController.prevSelectedLabel)
+            InspectorTabController.prevSelectedLabel = field.label;
+        else return;
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
 }
