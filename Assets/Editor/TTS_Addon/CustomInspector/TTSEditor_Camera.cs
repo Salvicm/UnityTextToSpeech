@@ -52,7 +52,7 @@ public class TTSEditor_Camera : Editor
 
     public override VisualElement CreateInspectorGUI()
     {
-        VisualElement root = new VisualElement();
+        VisualElement root = new VisualElement(); 
 
         camera = target as Camera;
         SerializedObject m_SerializedObject = new SerializedObject(camera);
@@ -173,27 +173,6 @@ public class TTSEditor_Camera : Editor
         root.Add(tDisplay);
         tDisplay.RegisterCallback<FocusInEvent>(OnFocusInEventDropdown);
 
-        targetEye = m_SerializedObject.FindProperty("m_TargetEye");
-        iso = m_SerializedObject.FindProperty("m_Iso");
-        shutterSpeed = m_SerializedObject.FindProperty("m_ShutterSpeed");
-        aperture = m_SerializedObject.FindProperty("m_Aperture");
-        focusDistance = m_SerializedObject.FindProperty("m_FocusDistance");
-        focalLength = m_SerializedObject.FindProperty("m_FocalLength");
-        bladeCount = m_SerializedObject.FindProperty("m_BladeCount");
-        curvature = m_SerializedObject.FindProperty("m_Curvature");
-        barrelClipping = m_SerializedObject.FindProperty("m_BarrelClipping");
-        anamorphism = m_SerializedObject.FindProperty("m_Anamorphism");
-        lensShift = m_SerializedObject.FindProperty("m_LensShift");
-        gateFit = m_SerializedObject.FindProperty("m_GateFitMode");
-        nearClippingPlane = m_SerializedObject.FindProperty("near clip plane");
-        farClippingPlane = m_SerializedObject.FindProperty("far clip plane");
-        verticalFOV = m_SerializedObject.FindProperty("field of view");
-        fovAxisMode = m_SerializedObject.FindProperty("m_FOVAxisMode");
-        orthographic = m_SerializedObject.FindProperty("orthographic");
-
-        stereoConvergence = m_SerializedObject.FindProperty("m_StereoConvergence");
-        stereoSeparation = m_SerializedObject.FindProperty("m_StereoSeparation");
-        sensorSize = m_SerializedObject.FindProperty("m_SensorSize");
 
         return root;
     }
