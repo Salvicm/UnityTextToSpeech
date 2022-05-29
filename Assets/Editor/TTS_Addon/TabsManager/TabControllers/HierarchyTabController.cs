@@ -123,6 +123,7 @@ public class HierarchyTabController : TabController
     public void OnChangeSelection()
     {
         if (Selection.activeGameObject == null) return;
+        WindowsVoice.silence();
         WindowsVoice.speak(Selection.activeGameObject.name);
     }
 

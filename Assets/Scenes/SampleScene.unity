@@ -180,7 +180,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -277,6 +277,10 @@ PrefabInstance:
     - target: {fileID: 4065746947012439549, guid: 07ba520d8edf19047b53f1ed12624979, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5772061783244473902, guid: 07ba520d8edf19047b53f1ed12624979, type: 3}
+      propertyPath: m_Name
+      value: Child_1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07ba520d8edf19047b53f1ed12624979, type: 3}

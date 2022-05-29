@@ -135,7 +135,7 @@ class MainController
                case Windows.InspectorWindow:
                     if (currentTabController.GetType() != typeof(InspectorTabController))
                     {
-                        // currentTabController = new InspectorTabController();
+                        currentTabController = new InspectorTabController();
                     }
                         WindowsVoice.silence();
                         WindowsVoice.speak(TextHolder.OpenInspector);
@@ -186,19 +186,9 @@ class MainController
     static void ShowEditorWindowWithTypeName(string windowTypeName)
     {
 
-        
-        var types = new List<Type>()
-        { 
-            // first add your preferences
-            typeof(SceneView),
-            typeof(Editor).Assembly.GetType("UnityEditor.GameView"),
-            typeof(Editor).Assembly.GetType("UnityEditor.SceneHierarchyWindow"),
-            typeof(Editor).Assembly.GetType("UnityEditor.ConsoleWindow"),
-            typeof(Editor).Assembly.GetType("UnityEditor.ProjectBrowser"),
-            typeof(Editor).Assembly.GetType("UnityEditor.InspectorWindow")
-        };
 
-   
+
+
         switch (windowTypeName)
         {
             case Windows.SceneHierarchyWindow:
@@ -336,6 +326,7 @@ public class CustomDebug
     public int numberLine;
     public CustomDebug(string _value, string _stacktrace, LogType _type)
     {
+        // Esto no funciona demasiado bien habria que testearlo mas
         value = _value;
         stacktrace = _stacktrace;
         type = _type;
@@ -349,6 +340,5 @@ public class CustomDebug
         Int32.TryParse(fullPath.Split(':')[1],out numberLine);
         fullPath = fullPath.Split(':')[0];
     }
-
 }
 #endif

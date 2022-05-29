@@ -38,7 +38,10 @@ public static class WindowsVoice {
         }
         if (delay == 0f)
         {
-            addToSpeechQueue(msg);
+            if (true)
+                addToSpeechQueue("<VOICE REQUIRED=\"language=409\">" + msg + "</VOICE>");
+            else
+                addToSpeechQueue(msg);
         }
         
     }
