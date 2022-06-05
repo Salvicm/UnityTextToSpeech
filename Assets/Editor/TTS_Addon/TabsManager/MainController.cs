@@ -1,9 +1,7 @@
 #if (UNITY_EDITOR) 
 
 using System;
-using System.Reflection;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -47,19 +45,31 @@ class MainController
         
         if (EditorPrefs.GetBool("FirstInitDone", false) == false)
         {
-            KeyCombination keyCombination = new KeyCombination(KeyCode.O);
-            ShortcutBinding binding = new ShortcutBinding(keyCombination);
+          
             bool alreadyExists = false;
             foreach(string item in ShortcutManager.instance.GetAvailableProfileIds())
             {
-                Debug.Log(item);
                 if(item == TextHolder.profileID)
                     alreadyExists = true;
             }
             if(!alreadyExists)
                 ShortcutManager.instance.CreateProfile(TextHolder.profileID);
             ShortcutManager.instance.activeProfileId = TextHolder.profileID;
+            KeyCombination keyCombination = new KeyCombination(KeyCode.O);
+            ShortcutBinding binding = new ShortcutBinding(keyCombination);
             ShortcutManager.instance.RebindShortcut("Stage/Go Back", binding);
+
+            keyCombination = new KeyCombination(KeyCode.U,ShortcutModifiers.Action);
+            binding = new ShortcutBinding(keyCombination);
+            ShortcutManager.instance.RebindShortcut("Main Menu/Assets/Create/Prefab", binding);
+            
+            keyCombination = new KeyCombination(KeyCode.G, ShortcutModifiers.Action);
+            binding = new ShortcutBinding(keyCombination);
+            ShortcutManager.instance.RebindShortcut("Main Menu/GameObject/3D Object/Cube", binding);
+
+            keyCombination = new KeyCombination(KeyCode.Q, ShortcutModifiers.Action);
+            binding = new ShortcutBinding(keyCombination);
+            ShortcutManager.instance.RebindShortcut("Main Menu/Component/Physics/Rigidbody", binding);
 
             WindowsVoice.speak(TextHolder.InitializingTTS);
             EditorPrefs.SetBool("FirstInitDone", true);
@@ -109,48 +119,48 @@ class MainController
                     {
                         currentTabController = new HierarchyTabController();
                     }
-                        WindowsVoice.silence();
-                        WindowsVoice.speak(TextHolder.OpenHierarchy);
+                    WindowsVoice.silence();
+                    WindowsVoice.speak(TextHolder.OpenHierarchy);
                     break;
                 case Windows.SceneView:
                     if (currentTabController.GetType() != typeof(SceneTabController))
                     {
                         // currentTabController = new SceneTabController();
                     }
-                        WindowsVoice.silence();
-                        WindowsVoice.speak(TextHolder.OpenScene);
+                    WindowsVoice.silence();
+                    WindowsVoice.speak(TextHolder.OpenScene);
                     break;
                case Windows.GameView:
                     if (currentTabController.GetType() != typeof(GameTabController))
                     {
                         // currentTabController = new GameTabController();
                     }
-                        WindowsVoice.silence();
-                        WindowsVoice.speak(TextHolder.OpenGame);
+                    WindowsVoice.silence();
+                    WindowsVoice.speak(TextHolder.OpenGame);
                     break;
                case Windows.ConsoleWindow:
                     if (currentTabController.GetType() != typeof(ConsoleTabController))
                     {
                         currentTabController = new ConsoleTabController();
                     }
-                        WindowsVoice.silence();
-                        WindowsVoice.speak(TextHolder.OpenConsole);
+                    WindowsVoice.silence();
+                    WindowsVoice.speak(TextHolder.OpenConsole);
                     break;
                case Windows.InspectorWindow:
                     if (currentTabController.GetType() != typeof(InspectorTabController))
                     {
                         currentTabController = new InspectorTabController();
                     }
-                        WindowsVoice.silence();
-                        WindowsVoice.speak(TextHolder.OpenInspector);
+                    WindowsVoice.silence();
+                    WindowsVoice.speak(TextHolder.OpenInspector);
                     break;
                 case Windows.ProjectBrowser:
                     if (currentTabController.GetType() != typeof(ProjectTabController))
                     {
                         currentTabController = new ProjectTabController();
                     }
-                        WindowsVoice.silence();
-                        WindowsVoice.speak(TextHolder.OpenInspector);
+                    WindowsVoice.silence();
+                    WindowsVoice.speak(TextHolder.OpenExplorer);
                     break;
                 default:
                     WindowsVoice.speak(TextHolder.OpeningUnsuportedScene + nameOfCurrentWindow);
@@ -249,6 +259,8 @@ class MainController
         SessionState.SetBool("CanSpeak", true);
         WindowsVoice.silence();
         WindowsVoice.speak(TextHolder.InitializingTTS);
+        WindowsVoice.speak(TextHolder.salutation);
+
     }
 
     [MenuItem("TTS/disable %&U")]
@@ -262,47 +274,65 @@ class MainController
     [MenuItem("TTS/AdvanceTab %&D")]
     static void SelectedTabAdvanceButton()//d
     {
-        WindowsVoice.speak(logCount.ToString());
+        WindowsVoice.silence();
+
         currentTabController.advanceButton();
     }
 
     [MenuItem("TTS/RegresTab %&A")]
     static void SelectedTabRegressButton()//a
     {
+        WindowsVoice.silence();
+
         currentTabController.regressionButton();
     }
 
-    [MenuItem("TTS/GeneralButton %&X")]
+    [MenuItem("TTS/GeneralButton %&S")]
     static void SelectedTabGeneralButton()//x
     {
+        WindowsVoice.silence();
+
         currentTabController.generalButton();
     }
 
-    [MenuItem("TTS/InfoButton %&C")]
+    [MenuItem("TTS/InfoButton %&V")]
     static void SelectedTabInfoButton()
     {
+        WindowsVoice.silence();
+
         currentTabController.infoButton();
     }
 
     [MenuItem("TTS/TabUtilA %&B")]
     static void SelectedTabButtonA()
     {
-        Debug.Log("AAAAAA");
+        WindowsVoice.silence();
+
         currentTabController.buttonA();
     }
 
     [MenuItem("TTS/TabUtilB %&N")]
     static void SelectedTabButtonB()
     {
-        Debug.Log("BBBBBBB");
+        WindowsVoice.silence();
+
         currentTabController.buttonB();
     }
 
     [MenuItem("TTS/TabUtilC %&M")]
     static void SelectedTabButtonC()
     {
-        Debug.Log("CCCCCCCC");
+        WindowsVoice.silence();
+
         currentTabController.buttonC();
+    }
+
+    [MenuItem("TTS/GetTestInfo %&J")]
+    static void GetTestInfo()
+    {
+        WindowsVoice.silence();
+
+        currentTabController.testInfo();
     }
 
     [MenuItem("TTS/Helper/SilenceVoice %&K")]

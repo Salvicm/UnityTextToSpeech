@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneTabController : TabController
@@ -49,6 +47,10 @@ public class SceneTabController : TabController
         throw new System.NotImplementedException();
     }
     public override void clean()
+    {
+        throw new System.NotImplementedException();
+    }
+    public override void testInfo()
     {
         throw new System.NotImplementedException();
     }

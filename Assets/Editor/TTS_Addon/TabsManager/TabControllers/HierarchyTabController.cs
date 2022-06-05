@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
@@ -85,6 +83,7 @@ public class HierarchyTabController : TabController
          * * Nombre del siguiente y del anterior objeto? ______ Button B // No se si esto es posible // Falta
          * * Comprueba si es prefab y si estás en modo editar _ Button C // Con la P se abre el menú y con la O se cierra // Done
          * */
+        
         if (Selection.activeGameObject == null) return;
         if (Selection.activeGameObject.transform.childCount > 0)
         {
@@ -95,12 +94,11 @@ public class HierarchyTabController : TabController
                     WindowsVoice.speak(allChildren[i].gameObject.name);
             }
         }
+        else { 
+            WindowsVoice.speak(TextHolder.NoChildren);
+        }
     }
     public override void buttonB()
-    {
-        if (Selection.activeGameObject == null) return;
-    }
-    public override void buttonC()
     {
         if (Selection.activeGameObject == null) return;
         //Es prefab el objeto seleccionado?
@@ -119,6 +117,11 @@ public class HierarchyTabController : TabController
             WindowsVoice.speak(TextHolder.CurrentlyEditingPrefab + Selection.activeGameObject.transform.root.name);
         }
     }
+    public override void buttonC()
+    {
+        WindowsVoice.speak(TextHolder.thisDoesNothing);
+
+    }
 
     public void OnChangeSelection()
     {
@@ -130,5 +133,10 @@ public class HierarchyTabController : TabController
     public override void clean()
     {
         Selection.selectionChanged -= OnChangeSelection;
+    }
+    public override void testInfo()
+    {
+        WindowsVoice.silence();
+        WindowsVoice.speak(TextHolder.infoAboutHierarchy);
     }
 }

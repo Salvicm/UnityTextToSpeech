@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 public class InspectorTabController : TabController
 {
 
     public static string prevSelectedLabel = "";
     public static string currentValueAsString = "";
+    public static string elementSelected;
+    public static string currentElementSelected { 
+        get { return elementSelected; } 
+        set { if (value != elementSelected) { elementSelected = value; WindowsVoice.speak(currentElementSelected); } } }
     public InspectorTabController()
     {
         
@@ -68,6 +67,10 @@ public class InspectorTabController : TabController
     {
 
     }
-
+    public override void testInfo()
+    {
+        WindowsVoice.silence();
+        WindowsVoice.speak(TextHolder.infoAboutInspector);
+    }
 
 }
