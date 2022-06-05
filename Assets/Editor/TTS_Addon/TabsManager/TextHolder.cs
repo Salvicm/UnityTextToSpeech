@@ -57,9 +57,24 @@ static class TextHolder
 
 
 
+    // Generic Documentation
+    public static string salutation = "Welcome to Unity's text-to-speech plugin prototype. Navigate through the windows pressing control and numbers 1 through 5 or control shift c for console."
+        + "you'll need to navigate the Unity menu in order to test this plugin, the orders for each of the windows will be explained by pressing <No comentado>. Go on, try and navigate through windows."+
+        "Use <No comentado> to get info for each window control.";
 
+    public static string infoAboutHierarchy = "In the Hierarchy you'll need to be able to create an object, change its name and edit a prefab. "+
+        "To do so you'll need to use commands Control G to create a cube and then press enter. Press F2 to change its name and then use Control U to make it a prefab.";
 
+    public static string infoAboutProjectExplorer = "In the project explorer you'll be able to navigate between items in the folders of the project. However it is a bit tricky."+
+        " To do so, after opening the explorer, you'll need to press left and right arrow keys to navigate between the items in the current folder, but to be able to change folder, you'll need to press tab" + 
+        "and then use up and down to navigate between folders. Sadly, the only way to know which folder is selected is by pressing Tab twice to select the first Item and use Auxiliar button 2 to know the folder";
 
+    public static string infoAboutLogConsole = "This is the console log, you should be able to navigate through a few logs that have been created as a test."
+        +"To do that you'll need to press the info button and use the base controls on it. You should be able to understand the information of at least three logs.";
+
+    public static string infoAboutInspector = "By pressing General button you'll be able to check which object is currently selected. Select the cube you created on the Hierarchy and then "+
+        "proceed to add a Rigidbody with control q. Once done this, use Tab until you hear any property, then use auxiliar button A to check its value. Then, keep tabbing until you reach the rigidbody"+
+        "to then finish by activating the IsKinematic value.";
 
 
 
@@ -90,6 +105,8 @@ static class TextHolder
         "Use auxiliar button 1 to hear actual log path." +
         "Use auxiliar button 2 to hear the full stacktrace." +
         "Use auxiliar button 3 to modify the type of logs to check'.";
+
+
     public static string InspectorInfo = "Work in progress";
 
 

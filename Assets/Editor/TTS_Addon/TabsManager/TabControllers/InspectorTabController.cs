@@ -9,6 +9,10 @@ public class InspectorTabController : TabController
 
     public static string prevSelectedLabel = "";
     public static string currentValueAsString = "";
+    public static string elementSelected;
+    public static string currentElementSelected { 
+        get { return elementSelected; } 
+        set { if (value != elementSelected) { elementSelected = value; WindowsVoice.speak(currentElementSelected); } } }
     public InspectorTabController()
     {
         

@@ -45,21 +45,33 @@ class MainController
             WindowsVoice.destroySpeech();
         }
         
-        if (EditorPrefs.GetBool("FirstInitDone", false) == false)
+        if (true || EditorPrefs.GetBool("FirstInitDone", false) == false)
         {
-            KeyCombination keyCombination = new KeyCombination(KeyCode.O);
-            ShortcutBinding binding = new ShortcutBinding(keyCombination);
+          
             bool alreadyExists = false;
             foreach(string item in ShortcutManager.instance.GetAvailableProfileIds())
             {
-                Debug.Log(item);
                 if(item == TextHolder.profileID)
                     alreadyExists = true;
             }
             if(!alreadyExists)
                 ShortcutManager.instance.CreateProfile(TextHolder.profileID);
             ShortcutManager.instance.activeProfileId = TextHolder.profileID;
+            KeyCombination keyCombination = new KeyCombination(KeyCode.O);
+            ShortcutBinding binding = new ShortcutBinding(keyCombination);
             ShortcutManager.instance.RebindShortcut("Stage/Go Back", binding);
+
+            keyCombination = new KeyCombination(KeyCode.U,ShortcutModifiers.Action);
+            binding = new ShortcutBinding(keyCombination);
+            ShortcutManager.instance.RebindShortcut("Main Menu/Assets/Create/Prefab", binding);
+            
+            keyCombination = new KeyCombination(KeyCode.G, ShortcutModifiers.Action);
+            binding = new ShortcutBinding(keyCombination);
+            ShortcutManager.instance.RebindShortcut("Main Menu/GameObject/3D Object/Cube", binding);
+
+            keyCombination = new KeyCombination(KeyCode.Q, ShortcutModifiers.Action);
+            binding = new ShortcutBinding(keyCombination);
+            ShortcutManager.instance.RebindShortcut("Main Menu/Component/Physics/Rigidbody", binding);
 
             WindowsVoice.speak(TextHolder.InitializingTTS);
             EditorPrefs.SetBool("FirstInitDone", true);
