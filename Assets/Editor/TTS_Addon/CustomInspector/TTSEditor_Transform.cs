@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -28,7 +26,6 @@ public class TTSEditor_Transform : Editor
         root.Add(position);
 
         rotationField = new Vector3Field("Rotation");
-        //rotationField.BindProperty(rotProp);
         root.Add(rotationField);
         rotationField.value = TransformUtils.GetInspectorRotation(transform);
         rotationField.RegisterValueChangedCallback(eventData =>
@@ -41,8 +38,11 @@ public class TTSEditor_Transform : Editor
         scale.BindProperty(scaleProp);
         root.Add(scale);
         scale.RegisterCallback<FocusInEvent>(OnFocusInEvent);
+        scale.RegisterCallback<ChangeEvent<Vector3>>(ChangeEventColor);
         rotationField.RegisterCallback<FocusInEvent>(OnFocusInEvent);
+        rotationField.RegisterCallback<ChangeEvent<Vector3>>(ChangeEventColor);
         position.RegisterCallback<FocusInEvent>(OnFocusInEvent);
+        position.RegisterCallback<ChangeEvent<Vector3>>(ChangeEventColor);
 
         return root;
     }
@@ -59,11 +59,26 @@ public class TTSEditor_Transform : Editor
     }
     private void OnFocusInEvent(FocusInEvent evt)
     {
+
         Vector3Field vector3Field = evt.target as Vector3Field;
-        InspectorTabController.currentValueAsString = "X = " +  vector3Field.value.x + ", Y = " + vector3Field.value.y + ", Z = " + vector3Field.value.z;
+        InspectorTabController.currentValueAsString = "X = " +  vector3Field.value.x + ", Y = " + vector3Field.value.y + 
+            ", Z = " + vector3Field.value.z;InspectorTabController.currentValueAsString = "X = " +  vector3Field.value.x + 
+            ", Y = " + vector3Field.value.y + ", Z = " + vector3Field.value.z;
         if (vector3Field.label != InspectorTabController.prevSelectedLabel)
             InspectorTabController.prevSelectedLabel = vector3Field.label;
         else return;
+        WindowsVoice.silence();
+
+        InspectorTabController.currentElementSelected = "Transform";
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
+    }
+  
+
+    private void ChangeEventColor(ChangeEvent<Vector3> evt)
+    {
+        Vector3Field vector3Field = evt.target as Vector3Field;
+        InspectorTabController.currentValueAsString = "X = " +  vector3Field.value.x + ", Y = " + vector3Field.value.y + 
+            ", Z = " + vector3Field.value.z;InspectorTabController.currentValueAsString = "X = " +  vector3Field.value.x + 
+            ", Y = " + vector3Field.value.y + ", Z = " + vector3Field.value.z;
     }
 }
