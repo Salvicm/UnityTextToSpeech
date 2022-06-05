@@ -38,10 +38,10 @@ public static class WindowsVoice {
         }
         if (delay == 0f)
         {
-            if (true)
-                addToSpeechQueue("<VOICE REQUIRED=\"language=409\">" + msg + "</VOICE>");
-            else
-                addToSpeechQueue(msg);
+            //if(Application.systemLanguage == SystemLanguage.English)
+                addToSpeechQueue("<RATE ABSSPEED=\"-1\"><VOICE REQUIRED=\"language=409\">" + msg + "</VOICE></RATE>"); 
+            //else
+            //addToSpeechQueue(msg);
         }
         
     }
@@ -63,4 +63,8 @@ public static class WindowsVoice {
         Debug.Log("this is a test");
     }
 
+    internal static void speak(object noChildren)
+    {
+        throw new NotImplementedException();
+    }
 }

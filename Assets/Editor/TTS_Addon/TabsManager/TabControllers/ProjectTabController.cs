@@ -34,22 +34,12 @@ public class ProjectTabController : TabController
     }
     public override void advanceButton()
     {
-        if (Selection.activeObject == null) return;
-       
+        WindowsVoice.speak(TextHolder.thisDoesNothing);
 
-        //    WindowsVoice.speak(Selection.activeGameObject.name + TextHolder.ChildrenList + Selection.activeGameObject.transform.childCount + TextHolder.Children);
-        //    for (int i = 1; i < allChildren.Length; i++)
-        //    {
-        //        if (allChildren[i].gameObject.transform.parent.gameObject == Selection.activeGameObject.transform.gameObject)
-        //            WindowsVoice.speak(allChildren[i].gameObject.name);
-        //    }
-        //}
     }
     public override void regressionButton()
     {
-        if (Selection.activeGameObject == null) return;
-        //if (Selection.activeGameObject.transform.parent != null)
-        //    WindowsVoice.speak(TextHolder.HasParent + Selection.activeGameObject.transform.parent.name);
+        WindowsVoice.speak(TextHolder.thisDoesNothing);
     }
     public override void generalButton()
     {
@@ -148,4 +138,10 @@ public class ProjectTabController : TabController
     {
         Selection.selectionChanged -= OnChangeSelection;
     }
+    public override void testInfo()
+    {
+        WindowsVoice.silence();
+        WindowsVoice.speak(TextHolder.infoAboutProjectExplorer);
+    }
 }
+

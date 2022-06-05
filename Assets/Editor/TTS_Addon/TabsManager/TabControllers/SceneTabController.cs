@@ -52,4 +52,8 @@ public class SceneTabController : TabController
     {
         throw new System.NotImplementedException();
     }
+    public override void testInfo()
+    {
+        throw new System.NotImplementedException();
+    }
 }

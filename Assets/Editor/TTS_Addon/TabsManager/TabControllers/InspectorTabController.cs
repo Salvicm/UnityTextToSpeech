@@ -72,6 +72,10 @@ public class InspectorTabController : TabController
     {
 
     }
-
+    public override void testInfo()
+    {
+        WindowsVoice.silence();
+        WindowsVoice.speak(TextHolder.infoAboutInspector);
+    }
 
 }

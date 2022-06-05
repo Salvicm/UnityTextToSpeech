@@ -48,8 +48,11 @@ public class GameTabController : TabController
     {
     }
 
-  
 
-   
-  
+    public override void testInfo()
+    {
+        
+    }
+
+
 }

@@ -17,6 +17,12 @@ public class ConsoleTabController : TabController
 
     public ConsoleTabController()
     {
+        Debug.Log("This is a log Debug");
+        Debug.LogError("This is an error Debug");
+        Debug.LogWarning("This is a warning Debug");
+        Debug.Log("This is another log debug");
+        Debug.LogError("This is another error debug");
+        Debug.LogWarning("This is another warning debug");
         
     }
     ~ConsoleTabController()
@@ -25,6 +31,8 @@ public class ConsoleTabController : TabController
     public override void init()
     {
         currentSelected = MainController.ErrorLogs.Count > 0 ? MainController.ErrorLogs.Count - 1 : 0;
+
+
         return;
     }
  
@@ -163,5 +171,9 @@ public class ConsoleTabController : TabController
     {
         
     }
-
+    public override void testInfo()
+    {
+        WindowsVoice.silence();
+        WindowsVoice.speak(TextHolder.infoAboutLogConsole);
+    }
 }
