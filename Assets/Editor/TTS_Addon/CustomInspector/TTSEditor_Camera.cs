@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -188,7 +185,6 @@ public class TTSEditor_Camera : Editor
 
     private void OnFocusInEventFloat(FocusInEvent evt)
     {
-        InspectorTabController.currentElementSelected = "Camera";
 
         FloatField field = evt.target as FloatField;
         InspectorTabController.currentValueAsString = field.value.ToString();
@@ -197,6 +193,7 @@ public class TTSEditor_Camera : Editor
         else return;
         WindowsVoice.silence();
 
+        InspectorTabController.currentElementSelected = "Camera";
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
     private void ChangeEventFloat(ChangeEvent<float> evt)
@@ -207,7 +204,6 @@ public class TTSEditor_Camera : Editor
 
     private void OnFocusInEventBool(FocusInEvent evt)
     {
-        InspectorTabController.currentElementSelected = "Camera";
         Toggle field = evt.target as Toggle;
         InspectorTabController.currentValueAsString = field.value.ToString();
         if (field.label != InspectorTabController.prevSelectedLabel)
@@ -215,6 +211,7 @@ public class TTSEditor_Camera : Editor
         else return;
         WindowsVoice.silence();
 
+        InspectorTabController.currentElementSelected = "Camera";
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
 
@@ -233,7 +230,6 @@ public class TTSEditor_Camera : Editor
   
     private void OnFocusInEventRect(FocusInEvent evt)
     {
-        InspectorTabController.currentElementSelected = "Camera";
         RectField field = evt.target as RectField;
         InspectorTabController.currentValueAsString = "X = " + field.value.x + ", Y = " + field.value.y + ", Height = " + field.value.height + ", Width = " + field.value.width;
         if (field.label != InspectorTabController.prevSelectedLabel)
@@ -241,6 +237,7 @@ public class TTSEditor_Camera : Editor
         else return;
         WindowsVoice.silence();
 
+        InspectorTabController.currentElementSelected = "Camera";
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
 
@@ -256,7 +253,6 @@ public class TTSEditor_Camera : Editor
     }
     private void OnFocusInEventColor(FocusInEvent evt)
     {
-        InspectorTabController.currentElementSelected = "Camera";
         ColorField field = evt.target as ColorField;
         InspectorTabController.currentValueAsString = "Red = " + field.value.r * 255 + ", Green = " + field.value.g * 255 + ", Blue = " + field.value.b * 255 + ", Alpha = " + field.value.a * 255;
         if (field.label != InspectorTabController.prevSelectedLabel)
@@ -264,6 +260,7 @@ public class TTSEditor_Camera : Editor
         else return;
         WindowsVoice.silence();
 
+        InspectorTabController.currentElementSelected = "Camera";
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
 

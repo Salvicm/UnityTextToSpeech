@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -61,7 +59,6 @@ public class TTSEditor_Transform : Editor
     }
     private void OnFocusInEvent(FocusInEvent evt)
     {
-        InspectorTabController.currentElementSelected = "Transform";
 
         Vector3Field vector3Field = evt.target as Vector3Field;
         InspectorTabController.currentValueAsString = "X = " +  vector3Field.value.x + ", Y = " + vector3Field.value.y + 
@@ -71,6 +68,8 @@ public class TTSEditor_Transform : Editor
             InspectorTabController.prevSelectedLabel = vector3Field.label;
         else return;
         WindowsVoice.silence();
+
+        InspectorTabController.currentElementSelected = "Transform";
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
   

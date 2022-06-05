@@ -1,9 +1,7 @@
 #if (UNITY_EDITOR) 
 
 using System;
-using System.Reflection;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -162,7 +160,7 @@ class MainController
                         currentTabController = new ProjectTabController();
                     }
                     WindowsVoice.silence();
-                    WindowsVoice.speak(TextHolder.OpenInspector);
+                    WindowsVoice.speak(TextHolder.OpenExplorer);
                     break;
                 default:
                     WindowsVoice.speak(TextHolder.OpeningUnsuportedScene + nameOfCurrentWindow);

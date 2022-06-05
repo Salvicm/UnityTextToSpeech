@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -106,12 +103,12 @@ public class TTSEditor_Rigidbody : Editor
     {
         FloatField field = evt.target as FloatField;
         InspectorTabController.currentValueAsString = field.value.ToString();
-        InspectorTabController.currentElementSelected = "Rigidbody";
         if (field.label != InspectorTabController.prevSelectedLabel)
             InspectorTabController.prevSelectedLabel = field.label;
         else return;
         WindowsVoice.silence();
 
+        InspectorTabController.currentElementSelected = "Rigidbody";
         WindowsVoice.speak(InspectorTabController.prevSelectedLabel);
     }
 

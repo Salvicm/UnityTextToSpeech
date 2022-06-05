@@ -1,66 +1,66 @@
 #if (UNITY_EDITOR) 
-using System.Collections;
-using UnityEditor;
+using UnityEngine;
+
 
 static class TextHolder
 {
 
     // Base
-    public static string InitializingTTS { set { } get { return true ? "Initializing TTS" : "Inicializando TTS"; } }
+    public static string InitializingTTS { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Initializing TTS" : "Inicializando TTS"; } }
     public static string voidText = "";
 
     // OpenWindows
-    public static string OpenHierarchy { set { } get { return true ? "Opening hierarchy" : "Abriendo jerarquia"; } }
-    public static string OpenScene { set { } get { return true ? "Opening scene" : "Abriendo escena"; } }
-    public static string OpenGame { set { } get { return true ? "Opening game" : "Abriendo juego"; } }
-    public static string OpenConsole { set { } get { return true ? "Opening console" : "Abriendo consola"; } }
-    public static string OpenInspector { set { } get { return true ? "Opening inspector" : "Abriendo inspector"; } }
-    public static string OpenExplorer { set { } get { return true ? "Opening file explorer" : "Abriendo explorador de archivos"; } }
-    public static string OpeningUnsuportedScene { set { } get { return true ? "Opening unsuported window: " : "Abriendo ventana no soportada"; } }
+    public static string OpenHierarchy { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Opening hierarchy" : "Abriendo jerarquia"; } }
+    public static string OpenScene { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Opening scene" : "Abriendo escena"; } }
+    public static string OpenGame { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Opening game" : "Abriendo juego"; } }
+    public static string OpenConsole { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Opening console" : "Abriendo consola"; } }
+    public static string OpenInspector { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Opening inspector" : "Abriendo inspector"; } }
+    public static string OpenExplorer { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Opening file explorer" : "Abriendo explorador de archivos"; } }
+    public static string OpeningUnsuportedScene { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Opening unsuported window: " : "Abriendo ventana no soportada"; } }
 
 
 
     //Hierarchy controller
-    public static string ChildrenList { set { } get { return true ? "has a total of " : " Tiene un total de "; } }
-    public static string Children { set { } get { return true ? "children" : "hijos"; } }
-    public static string HasParent { set { } get { return true ? "Has a parent" : "Tiene padre"; } }
-    public static string IsAPrefab { set { } get { return true ? "Is a prefab" : "Es un prefab"; } }
-    public static string NotAPrefab { set { } get { return true ? "Is not a prefab" : "No es un prefab"; } }
-    public static string CurrentlyEditingPrefab { set { } get { return true ? "Editing prefab: " : "Editando prefab: "; } }
-    public static string NoChildren { set { } get { return true ? "Has no children: " : "No tiene hijos: "; } }
+    public static string ChildrenList { set { } get { return Application.systemLanguage == SystemLanguage.English ? "has a total of " : " Tiene un total de "; } }
+    public static string Children { set { } get { return Application.systemLanguage == SystemLanguage.English ? "children" : "hijos"; } }
+    public static string HasParent { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Has a parent" : "Tiene padre"; } }
+    public static string IsAPrefab { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Is a prefab" : "Es un prefab"; } }
+    public static string NotAPrefab { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Is not a prefab" : "No es un prefab"; } }
+    public static string CurrentlyEditingPrefab { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Editing prefab: " : "Editando prefab: "; } }
+    public static string NoChildren { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Has no children: " : "No tiene hijos: "; } }
 
     // project controller
-    public static string LocationIs { set { } get { return true ? "Complete path is: " : "La direccion completa es: "; } }
-    public static string ActualFolder { set { } get { return true ? "Actual folder is: " : "La carpeta actual es:  "; } }
-    public static string ThisItemIs { set { } get { return true ? " is type " : " es del tipo "; } }
-    public static string IsAScript { set { } get { return true ? "Script" : "Script"; } }
-    public static string IsAFolder { set { } get { return true ? "folder" : "carpeta"; } }
-    public static string IsAScene { set { } get { return true ? "scene" : "Escena"; } }
-    public static string IsAnAudioMixer { set { } get { return true ? "Audio Mixer controller" : "Controlador de mezclador de audio"; } }
-    public static string IsAShader { set { } get { return true ? "Shader" : "Shader"; } }
-    public static string IsAGameObject { set { } get { return true ? "Game Object" : "Game Object"; } }
-    public static string IsADLL { set { } get { return true ? "DLL" : "DLL"; } }
-    public static string UnknownItem { set { } get { return true ? "Unknown" : "Desconocido"; } }
+    public static string LocationIs { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Complete path is: " : "La direccion completa es: "; } }
+    public static string ActualFolder { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Actual folder is: " : "La carpeta actual es:  "; } }
+    public static string ThisItemIs { set { } get { return Application.systemLanguage == SystemLanguage.English ? " is type " : " es del tipo "; } }
+    public static string IsAScript { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Script" : "Script"; } }
+    public static string IsAFolder { set { } get { return Application.systemLanguage == SystemLanguage.English ? "folder" : "carpeta"; } }
+    public static string IsAScene { set { } get { return Application.systemLanguage == SystemLanguage.English ? "scene" : "Escena"; } }
+    public static string IsAnAudioMixer { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Audio Mixer controller" : "Controlador de mezclador de audio"; } }
+    public static string IsAShader { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Shader" : "Shader"; } }
+    public static string IsAGameObject { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Game Object" : "Game Object"; } }
+    public static string IsADLL { set { } get { return Application.systemLanguage == SystemLanguage.English ? "DLL" : "DLL"; } }
+    public static string UnknownItem { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Unknown" : "Desconocido"; } }
 
     // Console 
-    public static string OnlyErrors { set { } get { return true ? "Only errors" : "Solo errores"; } }
-    public static string OnlyWarnings { set { } get { return true ? "Only warnings" : "Solo advertencias"; } }
-    public static string OnlyLogs { set { } get { return true ? "Only logs" : "Solo logs"; } }
-    public static string OnlyExceptions { set { } get { return true ? "Only exceptions" : "Solo excepciones"; } }
-    public static string OnlyAsserts { set { } get { return true ? "Only asserts" : "Solo asserts"; } }
-    public static string All { set { } get { return true ? "All" : "Todo"; } }
+    public static string OnlyErrors { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Only errors" : "Solo errores"; } }
+    public static string OnlyWarnings { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Only warnings" : "Solo advertencias"; } }
+    public static string OnlyLogs { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Only logs" : "Solo logs"; } }
+    public static string OnlyExceptions { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Only exceptions" : "Solo excepciones"; } }
+    public static string OnlyAsserts { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Only asserts" : "Solo asserts"; } }
+    public static string All { set { } get { return Application.systemLanguage == SystemLanguage.English ? "All" : "Todo"; } }
 
-    public static string readingAll { set { } get { return true ? "Reading full stacktrace: " : "Leyendo stacktrace completo "; } }
-    public static string ErrorNumber { set { } get { return true ? "Error number " : "Error número "; } }
-    public static string Of { set { } get { return true ? " of " : " de "; } }
+    public static string readingAll { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Reading full stacktrace: " : "Leyendo stacktrace completo "; } }
+    public static string ErrorNumber { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Error number " : "Error número "; } }
+    public static string Of { set { } get { return Application.systemLanguage == SystemLanguage.English ? " of " : " de "; } }
 
     // Inspector Window
-    public static string thisDoesNothing { set { } get { return true ? "This button does nothing" : "Este botón no hace nada"; } }
+    public static string thisDoesNothing { set { } get { return Application.systemLanguage == SystemLanguage.English ? "This button does nothing" : "Este botón no hace nada"; } }
 
 
 
     // Generic Documentation
-    public static string salutation { set { } get { return true ? "Welcome to Unity's text-to-speech plug-in prototype, Navigate through the windows pressing control and numbers 1 through 5 or control shift c for console, "
+    public static string salutation { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Welcome to Unity's text-to-speech plug-in prototype, Navigate through the windows pressing control and numbers 1 through 5 or control shift c for console, "
         + "You'll need to navigate the Unity menu in order to test this plug-in, the orders for each of the windows will be explained by pressing control alt J;Go on, try and navigate through windows, " +
         "Use control alt V to get info for each window control, " :
         
@@ -69,14 +69,14 @@ static class TextHolder
         "Usa control, alt, v para obtener la información de los controles de cada ventana"; }
     } 
 
-    public static string infoAboutHierarchy { set { } get { return true ? "In the Hierarchy you'll need to be able to create an object, change its name and edit a prefab, " +
+    public static string infoAboutHierarchy { set { } get { return Application.systemLanguage == SystemLanguage.English ? "In the Hierarchy you'll need to be able to create an object, change its name and edit a prefab, " +
         "To do so you'll need to use commands Control G to create a cube and then press enter, Press F2 to change its name." :
 
         "En la jerarquía necesitarás ser capaz de crear un objeto, cambiar su nombre y editar un prefab, " +
         "Para hacerlo necesitarás usar Control, G, para crear un cubo y pulsar enter. Pulsar F2 para cambiar su nombre."; }
     } 
 
-    public static string infoAboutProjectExplorer { set { } get { return true ? "In the project explorer you'll be able to navigate between items in the folders of the project, However it is a bit tricky, " +
+    public static string infoAboutProjectExplorer { set { } get { return Application.systemLanguage == SystemLanguage.English ? "In the project explorer you'll be able to navigate between items in the folders of the project, However it is a bit tricky, " +
         " To do so, after opening the explorer, you'll need to press left and right arrow keys to navigate between the items in the current folder, but to be able to change folder, you'll need to press tab" +
         "and then use up and down to navigate between folders, Sadly, the only way to know which folder is selected is by pressing Tab twice to select the first Item and use Control alt B to know the folder, " +
         "Before finishing, use control U to create an empty Prefab and type in a name" :
@@ -87,14 +87,14 @@ static class TextHolder
         "Antes de acabar, usa Control U para crear un prefab vacío, y ponle un nombre."; } 
     } 
 
-    public static string infoAboutLogConsole { set { } get { return true ? "This is the console log, you should be able to navigate through a few logs that have been created as a test, "
+    public static string infoAboutLogConsole { set { } get { return Application.systemLanguage == SystemLanguage.English ? "This is the console log, you should be able to navigate through a few logs that have been created as a test, "
         + "To do that you'll need to press the info button and use the base controls on it, You should be able to understand the information of at least three logs, " :
 
         "Este es el registro de errores(Console log), deberías ser capaz de navegar a través de varios logs que se han creado como test."
         + "Para hacerlo necesitarás presionar el botón de información y usar los controles base. Deberías entender la información de al menos tres logs."; } 
     } 
 
-    public static string infoAboutInspector { set { } get { return true ? "By pressing Control alt S you'll be able to check which object is currently selected, Select the cube you created on the Hierarchy and then " +
+    public static string infoAboutInspector { set { } get { return Application.systemLanguage == SystemLanguage.English ? "By pressing Control alt S you'll be able to check which object is currently selected, Select the cube you created on the Hierarchy and then " +
         "proceed to add a Rigidbody with control q, Once done this, use Tab until you hear any property, then use auxiliar button A to check its value, Then, keep tabbing until you reach the rigidbody" +
         "to then finish by activating the IsKinematic value, " :
 
@@ -111,7 +111,7 @@ static class TextHolder
 
     #region Information
     //Info
-    public static string HierarchyInfo { set { } get { return true ? "Control alt S to know which object is selected, if it has a parent and how many children does it have. " +
+    public static string HierarchyInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know which object is selected, if it has a parent and how many children does it have. " +
         "Control alt D to hear the number of childs it has and enumerate them." +
         "Control alt A to hear the name of the parent object in case it exists." +
         "Control alt B to know what childs does that item have. " +
@@ -123,7 +123,7 @@ static class TextHolder
         "Control, alt, B para to saber que hijos tiene ese objeto. " +
         "Control, alt, N para saber si el objeto pertenece a un prefab y si estás en modo edición, cual es."; }
     } 
-    public static  string ProjectFolderInfo { set { } get { return true ? "Control alt S to know what object is selected and its extension." +
+    public static  string ProjectFolderInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know what object is selected and its extension." +
         "Control alt A to know the selected object's full path." +
         "Control alt B to know the folder of the current selected object." +
         "Control alt N to know if the object is a prefab." :
@@ -134,23 +134,23 @@ static class TextHolder
         "Control, alt, N para saber si el objeto es un prefab."; } 
     } 
                  
-    public static string ConsoleInfo { set { } get { return true ? "Control alt S to know the actual log, what it says and the type." +
+    public static string ConsoleInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know the actual log, what it says and the type." +
         "Control alt D to advance to the next log." +
         "Control alt A to return to the previous log." +
         "Control alt B to hear actual log path." +
         "Control alt N to hear the full stacktrace." +
-        "Control alt M to modify the type of logs to check'." :
+        "Control alt H to modify the type of logs to check'." :
                  
         "Control, alt, S para conocer el log seleccionado, lo que dice y su tipo." +
         "Control, alt, D para avanzar al siguiente log." +
         "Control, alt, A para volver al anterior log." +
         "Control, alt, B para escuchar la dirección completa del log." +
         "Control, alt, N para escuchar el stacktrace completo." +
-        "Control, alt, M para modificar el tipo de logs'."; } 
+        "Control, alt, H para modificar el tipo de logs'."; } 
     } 
 
 
-    public static string InspectorInfo { set { } get { return true ? "Control alt S to know the current selected item."  + 
+    public static string InspectorInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know the current selected item."  + 
         "control alt N to know the value of the current selected property" :
 
         "Control, alt, S, para saber el objeto seleccionado actualmente." +
@@ -159,8 +159,8 @@ static class TextHolder
     } 
 
 
-    public static string GameInfo { set { } get { return true ? "Unimplemented window" : "Este botón no hace nada"; } } 
-    public static string SceneInfo { set { } get { return true ? "Unimplemented window" : "Este botón no hace nada"; } } 
+    public static string GameInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Unimplemented window" : "Este botón no hace nada"; } } 
+    public static string SceneInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Unimplemented window" : "Este botón no hace nada"; } } 
 
 
 

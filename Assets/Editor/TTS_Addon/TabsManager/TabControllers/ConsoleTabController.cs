@@ -1,11 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-
-using UnityEditor.UI;
-using UnityEditor.UIElements;
-
 
 public class ConsoleTabController : TabController
 {

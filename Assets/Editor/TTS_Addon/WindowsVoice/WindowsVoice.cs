@@ -38,10 +38,10 @@ public static class WindowsVoice {
         }
         if (delay == 0f)
         {
-            //if(Application.systemLanguage == SystemLanguage.English)
+            if(Application.systemLanguage == SystemLanguage.English)
                 addToSpeechQueue("<RATE ABSSPEED=\"-1\"><VOICE REQUIRED=\"language=409\">" + msg + "</VOICE></RATE>"); 
-            //else
-            //addToSpeechQueue(msg);
+            else
+            addToSpeechQueue("<RATE ABSSPEED=\"-1\">" + msg + "</RATE>");
         }
         
     }

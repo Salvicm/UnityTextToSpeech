@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
 using System.IO;
 
 public class ProjectTabController : TabController
@@ -118,11 +114,11 @@ public class ProjectTabController : TabController
         if (PrefabUtility.GetPrefabAssetType(Selection.activeObject) != PrefabAssetType.NotAPrefab && 
             PrefabUtility.GetPrefabAssetType(Selection.activeObject) != PrefabAssetType.MissingAsset)
         {
-            Debug.Log(TextHolder.IsAPrefab);
+            WindowsVoice.speak(TextHolder.IsAPrefab);
         }
         else
         {
-            Debug.Log(TextHolder.NotAPrefab);
+            WindowsVoice.speak(TextHolder.NotAPrefab);
         }
         
     }
