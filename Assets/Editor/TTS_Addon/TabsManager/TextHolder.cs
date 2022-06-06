@@ -95,11 +95,11 @@ static class TextHolder
     } 
 
     public static string infoAboutInspector { set { } get { return Application.systemLanguage == SystemLanguage.English ? "By pressing Control alt S you'll be able to check which object is currently selected, Select the cube you created on the Hierarchy and then " +
-        "proceed to add a Rigidbody with control q, Once done this, use Tab until you hear any property, then use auxiliar button A to check its value, Then, keep tabbing until you reach the rigidbody" +
+        "proceed to add a Rigidbody with control q, Once done this, use Tab until you hear any property, then use Control alt B to check its value, Then, keep tabbing until you reach the rigidbody" +
         "to then finish by activating the IsKinematic value, " :
 
         "Al presionar Control, alt, S, deberías poder comprobar que objeto hay seleccionado ahora mismo. Selecciona el cubo que creaste en la jerarquía y" +
-        "procede a añadir un rigidbody con control q. Una vez hecho eso, usa Tab hasta que oigas una propiedad, y entonces usa Control, alt, S, para comprobar su valor. Entonces continua haciendo Tab hasta que alcances el rigidbody. Termina activando la opción Is Kinematic"; } 
+        "procede a añadir un rigidbody con control q. Una vez hecho eso, usa Tab hasta que oigas una propiedad, y entonces usa Control, alt, B, para comprobar su valor. Entonces continua haciendo Tab hasta que alcances el rigidbody. Termina activando la opción Is Kinematic"; } 
     } 
 
 
