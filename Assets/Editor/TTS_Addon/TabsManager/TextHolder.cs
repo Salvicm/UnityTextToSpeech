@@ -151,10 +151,10 @@ static class TextHolder
 
 
     public static string InspectorInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know the current selected item."  + 
-        "control alt N to know the value of the current selected property" :
+        "control alt B to know the value of the current selected property" :
 
         "Control, alt, S, para saber el objeto seleccionado actualmente." +
-        "control, alt, N, para saber el valor de la propiedad seleccionada actualmente.";
+        "control, alt, B, para saber el valor de la propiedad seleccionada actualmente.";
         } 
     } 
 
