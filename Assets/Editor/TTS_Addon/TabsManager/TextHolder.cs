@@ -88,10 +88,10 @@ static class TextHolder
     } 
 
     public static string infoAboutLogConsole { set { } get { return Application.systemLanguage == SystemLanguage.English ? "This is the console log, you should be able to navigate through a few logs that have been created as a test, "
-        + "To do that you'll need to press the info button and use the base controls on it, You should be able to understand the information of at least three logs, " :
+        + "To do that you'll need to press Control Alt V and use the base controls on it, You should be able to understand the information of at least three logs, " :
 
         "Este es el registro de errores(Console log), deberías ser capaz de navegar a través de varios logs que se han creado como test."
-        + "Para hacerlo necesitarás presionar el botón de información y usar los controles base. Deberías entender la información de al menos tres logs."; } 
+        + "Para hacerlo necesitarás presionar control alt V, y usar los controles base. Deberías entender la información de al menos tres logs."; } 
     } 
 
     public static string infoAboutInspector { set { } get { return Application.systemLanguage == SystemLanguage.English ? "By pressing Control alt S you'll be able to check which object is currently selected, Select the cube you created on the Hierarchy and then " +
@@ -126,12 +126,12 @@ static class TextHolder
     public static  string ProjectFolderInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know what object is selected and its extension." +
         "Control alt B to know the selected object's full path." +
         "Control alt N to know the folder of the current selected object." +
-        "Control alt J to know if the object is a prefab." :
+        "Control alt H to know if the object is a prefab." :
                  
         "Control, alt, S para saber que objeto está seleccionado y su extensión." +
         "Control, alt, B para saber la dirección completa del elemento." +
         "Control, alt, N para saber la carpeta seleccionada actualmente." +
-        "Control, alt, J para saber si el objeto es un prefab."; } 
+        "Control, alt, H para saber si el objeto es un prefab."; } 
     } 
                  
     public static string ConsoleInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know the actual log, what it says and the type." +
