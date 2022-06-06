@@ -319,7 +319,7 @@ class MainController
         currentTabController.buttonB();
     }
 
-    [MenuItem("TTS/TabUtilC %&M")]
+    [MenuItem("TTS/TabUtilC %&H")]
     static void SelectedTabButtonC()
     {
         WindowsVoice.silence();
