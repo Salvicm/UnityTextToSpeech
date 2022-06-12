@@ -38,6 +38,7 @@ public class ProjectTabController : TabController
         if(Selection.activeObject == null) return;
 
         string[] _path = AssetDatabase.GetAssetPath(Selection.activeObject).Split('/');
+        if (_path.Length < 3) return;
         string newPath = "";
         for (int i = 0; i < _path.Length - 2; i++)
         {
@@ -48,8 +49,6 @@ public class ProjectTabController : TabController
         Object obj = AssetDatabase.LoadAssetAtPath<Object>(newPath);
 
         Selection.activeObject = obj;
-        WindowsVoice.silence();
-        sayFolder(obj);
 
     }
     public override void generalButton()
@@ -124,11 +123,7 @@ public class ProjectTabController : TabController
         WindowsVoice.speak(TextHolder.ActualFolder);
         WindowsVoice.speak(_path[_path.Length - 2]);
     }
-    public void sayFolder(Object obj)
-    {
-        string[] _path = AssetDatabase.GetAssetPath(obj).Split('/');
-        WindowsVoice.speak(_path[_path.Length - 2]);
-    }
+
     public override void buttonC()
     {
         if (Selection.activeObject == null) return;
