@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ConsoleTabController : TabController
@@ -13,10 +14,16 @@ public class ConsoleTabController : TabController
         Debug.Log("This is a log Debug");
         Debug.LogError("This is an error Debug");
         Debug.LogWarning("This is a warning Debug");
-        Debug.Log("This is another log debug");
-        Debug.LogError("This is another error debug");
-        Debug.LogWarning("This is another warning debug");
-        
+        Debug.LogAssertion("This is an Assert");
+        try
+        {
+            string a = "";
+            char c = a[2];
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
     }
     ~ConsoleTabController()
     {

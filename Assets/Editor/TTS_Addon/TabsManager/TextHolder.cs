@@ -125,10 +125,12 @@ static class TextHolder
     } 
     public static  string ProjectFolderInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know what object is selected and its extension." +
         "Control alt B to know the selected object's full path." +
+        "Control alt A to go one folder back" +
         "Control alt N to know the folder of the current selected object." +
         "Control alt H to know if the object is a prefab." :
                  
         "Control, alt, S para saber que objeto está seleccionado y su extensión." +
+        "Control, alt, A para ir una carpeta hacia atrás" +
         "Control, alt, B para saber la dirección completa del elemento." +
         "Control, alt, N para saber la carpeta seleccionada actualmente." +
         "Control, alt, H para saber si el objeto es un prefab."; } 

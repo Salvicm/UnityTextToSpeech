@@ -35,7 +35,22 @@ public class ProjectTabController : TabController
     }
     public override void regressionButton()
     {
-        WindowsVoice.speak(TextHolder.thisDoesNothing);
+        if(Selection.activeObject == null) return;
+
+        string[] _path = AssetDatabase.GetAssetPath(Selection.activeObject).Split('/');
+        string newPath = "";
+        for (int i = 0; i < _path.Length - 2; i++)
+        {
+            newPath += _path[i];
+            newPath += "/";
+        }
+        newPath = newPath.Substring(0, newPath.Length - 1);
+        Object obj = AssetDatabase.LoadAssetAtPath<Object>(newPath);
+
+        Selection.activeObject = obj;
+        WindowsVoice.silence();
+        sayFolder(obj);
+
     }
     public override void generalButton()
     {
@@ -87,7 +102,9 @@ public class ProjectTabController : TabController
     {
         WindowsVoice.speak(TextHolder.ProjectFolderInfo);
     }
-    public override void Update() { }
+    public override void Update() 
+    {
+    }
     public override void buttonA()
     {
         
@@ -105,6 +122,11 @@ public class ProjectTabController : TabController
         if (Selection.activeObject == null) return;
         string[] _path = AssetDatabase.GetAssetPath(Selection.activeObject).Split('/');
         WindowsVoice.speak(TextHolder.ActualFolder);
+        WindowsVoice.speak(_path[_path.Length - 2]);
+    }
+    public void sayFolder(Object obj)
+    {
+        string[] _path = AssetDatabase.GetAssetPath(obj).Split('/');
         WindowsVoice.speak(_path[_path.Length - 2]);
     }
     public override void buttonC()
