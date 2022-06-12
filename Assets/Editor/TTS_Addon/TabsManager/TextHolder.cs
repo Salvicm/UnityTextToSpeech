@@ -77,13 +77,13 @@ static class TextHolder
     } 
     // Cambiar y no decir que da problemas
     public static string infoAboutProjectExplorer { set { } get { return Application.systemLanguage == SystemLanguage.English ? "In the project explorer you'll be able to navigate between items in the folders of the project, " +
-        "To do so after opening the explorer, you'll need to press left and right arrow keys to navigate between the items in the current folder, but to be able to change folder, you'll need to press tab" +
-        "and then use up and down to navigate between folders, the way to know which folder is selected is by pressing Tab twice to select the first Item and use Control alt B to know the folder, " +
+        "To do so after opening the explorer, you'll need to press left and right arrow keys to navigate between the items in the current folder." +
+        "To go back one folder use Control Alt A and use Control alt B to know the folder, " +
         "Before finishing, use control U to create an empty Prefab and type in a name. Lastly get the name of the current folder with Control alt N." :
 
         "En el explorador del proyecto serás capaz de navegar a través de los objetos en las carpetas del proyecto." +
-        "Para hacerlo, despues de abrir el explorador, necesitarás pulsar las flechas de dirección lateral para navegar entre los objetos, pero para cambiar la carpeta, deberás pulsar tab." +
-        "Entonces usar las flechas de dirección vertical para navegar por las carpetas. La única manera de saber que carpeta ha sido seleccionada es pulsando el Tab dos veces para seleccionar el primer Item y usar Control, alt, B para saber la carpeta" +
+        "Para hacerlo, despues de abrir el explorador, necesitarás pulsar las flechas de dirección lateral para navegar entre los objetos." +
+        "Para volver una carpeta atrás se ha de usar Control, Alt, A, y usar Control, alt, B para permite saber la carpeta" +
         "Antes de acabar, usa Control U para crear un prefab vacío, y ponle un nombre. Por último obtén el nombre de la carpeta actual con Control, alt, N"; } 
     } 
 
