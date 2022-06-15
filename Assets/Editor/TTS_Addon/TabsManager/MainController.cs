@@ -83,7 +83,6 @@ class MainController
         if (currentWindow == null && !started)
         {
             started = true;
-            EditorWindow[] allWindows = Resources.FindObjectsOfTypeAll<EditorWindow>();
             ShowSceneEditorWindow();
             currentWindow = EditorWindow.focusedWindow;
         }else if(currentWindow == null && started)
@@ -172,16 +171,6 @@ class MainController
             currentTabController.init();
 
         }
-
-
-        // TODO 
-        /* Close all tabs except basic and set layout 
-         * Autoclose tabs?
-         * ** Set Autoclose optional
-         * Get all params from the window and navigate
-         * Has unsaved stuff
-         * 
-         */
 
         previousWindow = currentWindow;
     }
