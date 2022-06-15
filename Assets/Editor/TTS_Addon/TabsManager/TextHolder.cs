@@ -75,31 +75,31 @@ static class TextHolder
         "En la jerarquía necesitarás ser capaz de crear un objeto, cambiar su nombre y editar un prefab, " +
         "Para hacerlo necesitarás usar Control, G, para crear un cubo y pulsar enter. Pulsar F2 para cambiar su nombre."; }
     } 
+    // Cambiar y no decir que da problemas
+    public static string infoAboutProjectExplorer { set { } get { return Application.systemLanguage == SystemLanguage.English ? "In the project explorer you'll be able to navigate between items in the folders of the project, " +
+        "To do so after opening the explorer, you'll need to press left and right arrow keys to navigate between the items in the current folder." +
+        "To go back one folder use Control Alt A and use Control alt B to know the folder, " +
+        "Before finishing, use control U to create an empty Prefab and type in a name. Lastly get the name of the current folder with Control alt N." :
 
-    public static string infoAboutProjectExplorer { set { } get { return Application.systemLanguage == SystemLanguage.English ? "In the project explorer you'll be able to navigate between items in the folders of the project, However it is a bit tricky, " +
-        " To do so, after opening the explorer, you'll need to press left and right arrow keys to navigate between the items in the current folder, but to be able to change folder, you'll need to press tab" +
-        "and then use up and down to navigate between folders, Sadly, the only way to know which folder is selected is by pressing Tab twice to select the first Item and use Control alt B to know the folder, " +
-        "Before finishing, use control U to create an empty Prefab and type in a name" :
-
-        "En el explorador del proyecto serás capaz de navegar a través de los objetos en las carpetas del proyecto. Aun así es un poco complicado actualmente." +
-        "Para hacerlo, despues de abrir el explorador, necesitarás pulsar las flechas de dirección lateral para navegar entre los objetos, pero para cambiar la carpeta, deberás pulsar tab." +
-        "Entonces usar las flechas de dirección vertical para navegar por las carpetas. Tristemente la única manera de saber que carpeta ha sido seleccionada es pulsando el Tab dos veces para seleccionar el primer Item y usar Control, alt, B para saber la carpeta" +
-        "Antes de acabar, usa Control U para crear un prefab vacío, y ponle un nombre."; } 
+        "En el explorador del proyecto serás capaz de navegar a través de los objetos en las carpetas del proyecto." +
+        "Para hacerlo, despues de abrir el explorador, necesitarás pulsar las flechas de dirección lateral para navegar entre los objetos." +
+        "Para volver una carpeta atrás se ha de usar Control, Alt, A, y usar Control, alt, B para permite saber la carpeta" +
+        "Antes de acabar, usa Control U para crear un prefab vacío, y ponle un nombre. Por último obtén el nombre de la carpeta actual con Control, alt, N"; } 
     } 
 
     public static string infoAboutLogConsole { set { } get { return Application.systemLanguage == SystemLanguage.English ? "This is the console log, you should be able to navigate through a few logs that have been created as a test, "
-        + "To do that you'll need to press the info button and use the base controls on it, You should be able to understand the information of at least three logs, " :
+        + "To do that you'll need to press Control Alt V and use the base controls on it, You should be able to understand the information of at least three logs, " :
 
         "Este es el registro de errores(Console log), deberías ser capaz de navegar a través de varios logs que se han creado como test."
-        + "Para hacerlo necesitarás presionar el botón de información y usar los controles base. Deberías entender la información de al menos tres logs."; } 
+        + "Para hacerlo necesitarás presionar control alt V, y usar los controles base. Deberías entender la información de al menos tres logs."; } 
     } 
 
     public static string infoAboutInspector { set { } get { return Application.systemLanguage == SystemLanguage.English ? "By pressing Control alt S you'll be able to check which object is currently selected, Select the cube you created on the Hierarchy and then " +
-        "proceed to add a Rigidbody with control q, Once done this, use Tab until you hear any property, then use auxiliar button A to check its value, Then, keep tabbing until you reach the rigidbody" +
+        "proceed to add a Rigidbody with control q, Once done this, use Tab until you hear any property, then use Control alt B to check its value, Then, keep tabbing until you reach the rigidbody" +
         "to then finish by activating the IsKinematic value, " :
 
         "Al presionar Control, alt, S, deberías poder comprobar que objeto hay seleccionado ahora mismo. Selecciona el cubo que creaste en la jerarquía y" +
-        "procede a añadir un rigidbody con control q. Una vez hecho eso, usa Tab hasta que oigas una propiedad, y entonces usa Control, alt, S, para comprobar su valor. Entonces continua haciendo Tab hasta que alcances el rigidbody. Termina activando la opción Is Kinematic"; } 
+        "procede a añadir un rigidbody con control q. Una vez hecho eso, usa Tab hasta que oigas una propiedad, y entonces usa Control, alt, B, para comprobar su valor. Entonces continua haciendo Tab hasta que alcances el rigidbody. Termina activando la opción Is Kinematic"; } 
     } 
 
 
@@ -124,14 +124,16 @@ static class TextHolder
         "Control, alt, N para saber si el objeto pertenece a un prefab y si estás en modo edición, cual es."; }
     } 
     public static  string ProjectFolderInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know what object is selected and its extension." +
-        "Control alt A to know the selected object's full path." +
-        "Control alt B to know the folder of the current selected object." +
-        "Control alt N to know if the object is a prefab." :
+        "Control alt B to know the selected object's full path." +
+        "Control alt A to go one folder back" +
+        "Control alt N to know the folder of the current selected object." +
+        "Control alt H to know if the object is a prefab." :
                  
         "Control, alt, S para saber que objeto está seleccionado y su extensión." +
-        "Control, alt, A para saber la dirección completa del elemento." +
-        "Control, alt, B para saber la carpeta seleccionada actualmente." +
-        "Control, alt, N para saber si el objeto es un prefab."; } 
+        "Control, alt, A para ir una carpeta hacia atrás" +
+        "Control, alt, B para saber la dirección completa del elemento." +
+        "Control, alt, N para saber la carpeta seleccionada actualmente." +
+        "Control, alt, H para saber si el objeto es un prefab."; } 
     } 
                  
     public static string ConsoleInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know the actual log, what it says and the type." +
@@ -151,10 +153,10 @@ static class TextHolder
 
 
     public static string InspectorInfo { set { } get { return Application.systemLanguage == SystemLanguage.English ? "Control alt S to know the current selected item."  + 
-        "control alt N to know the value of the current selected property" :
+        "control alt B to know the value of the current selected property" :
 
         "Control, alt, S, para saber el objeto seleccionado actualmente." +
-        "control, alt, N, para saber el valor de la propiedad seleccionada actualmente.";
+        "control, alt, B, para saber el valor de la propiedad seleccionada actualmente.";
         } 
     } 
 

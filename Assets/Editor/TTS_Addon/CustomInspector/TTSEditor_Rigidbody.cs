@@ -135,6 +135,8 @@ public class TTSEditor_Rigidbody : Editor
     {
         FloatField field = evt.target as FloatField;
         InspectorTabController.currentValueAsString = field.value.ToString();
+        WindowsVoice.silence();
+        WindowsVoice.speak(field.value.ToString());
     }
 
     private void ChangeEventToggle(ChangeEvent<bool> evt)

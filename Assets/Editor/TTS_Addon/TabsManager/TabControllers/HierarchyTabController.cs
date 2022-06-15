@@ -119,8 +119,11 @@ public class HierarchyTabController : TabController
     }
     public override void buttonC()
     {
-        WindowsVoice.speak(TextHolder.thisDoesNothing);
-
+        if (Selection.activeGameObject == null) return;
+        foreach (GameObject item in Selection.objects)
+        {
+            GameObject prefab = PrefabUtility.SaveAsPrefabAsset(item, "Assets/Prefabs/" + item.name + ".prefab");
+        }
     }
 
     public void OnChangeSelection()
