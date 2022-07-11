@@ -133,6 +133,8 @@ public class TTSEditor_Rigidbody : Editor
 
     private void ChangeEventFloat(ChangeEvent<float> evt)
     {
+        // Desconozco porque esto está dando errores
+        return;
         FloatField field = evt.target as FloatField;
         InspectorTabController.currentValueAsString = field.value.ToString();
         WindowsVoice.silence();
